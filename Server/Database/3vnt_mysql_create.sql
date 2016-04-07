@@ -1,4 +1,4 @@
--- DROP DATABASE eventr;
+DROP DATABASE eventr;
 CREATE DATABASE eventr;
 
 USE eventr;
@@ -38,9 +38,9 @@ CREATE TABLE users_choices (
 CREATE TABLE questions (
 	id int NOT NULL,
 	created_at DATETIME NOT NULL,
-	text varchar NOT NULL,
-	creator bigint NOT NULL,
-	event_id varchar NOT NULL,
+	text varchar(140) NOT NULL,
+	creator_id int NOT NULL,
+	event_id int NOT NULL,
 	PRIMARY KEY (id)
 );
 
@@ -58,26 +58,25 @@ CREATE TABLE users_messages (
 
 CREATE TABLE choices (
 	id int NOT NULL,
-	text varchar NOT NULL,
+	text varchar(140) NOT NULL,
 	isWinningChoice bool NOT NULL,
-	question_id varchar NOT NULL,
+	question_id int NOT NULL,
 	PRIMARY KEY (id)
 );
 
---- TODO: need to work on the user experience for payments
 CREATE TABLE payment (
 	id int NOT NULL,
 	created_at DATETIME NOT NULL,
-  paid_at DATETIME NOT NULL,
-	value FLOAT NOT NULL,
-	user_id FLOAT NOT NULL,
-	event_id FLOAT NOT NULL,
+  payment_deadline DATETIME NOT NULL,
+	payment_amount FLOAT NOT NULL,
+	user_id int NOT NULL,
+	event_id int NOT NULL,
 	PRIMARY KEY (id)
 );
 
 CREATE TABLE users_users (
 	user_id int NOT NULL,
-	user_id int NOT NULL,
+	friend_id int NOT NULL,
 	created_at DATETIME NOT NULL
 );
 
@@ -91,7 +90,7 @@ ALTER TABLE events          ADD CONSTRAINT events_fk0           FOREIGN KEY (eve
 ALTER TABLE users_choices   ADD CONSTRAINT users_choices_fk0    FOREIGN KEY (user_id)     REFERENCES users(id);
 ALTER TABLE users_choices   ADD CONSTRAINT users_choices_fk1    FOREIGN KEY (choices_id)  REFERENCES choices(id);
 
-ALTER TABLE questions       ADD CONSTRAINT questions_fk0        FOREIGN KEY (creator)     REFERENCES users(id);
+ALTER TABLE questions       ADD CONSTRAINT questions_fk0        FOREIGN KEY (creator_id)  REFERENCES users(id);
 ALTER TABLE questions       ADD CONSTRAINT questions_fk1        FOREIGN KEY (event_id)    REFERENCES events(id);
 
 ALTER TABLE users_messages  ADD CONSTRAINT users_messages_fk0   FOREIGN KEY (user_id)     REFERENCES users(id);
