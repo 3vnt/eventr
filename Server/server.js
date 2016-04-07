@@ -1,0 +1,37 @@
+//////////////////////////////////////////////
+//Server Dependencies
+//////////////////////////////////////////////
+var express = require('express');
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+var _ = require('underscore');
+
+//Modifiable Settings
+var port = 8080;
+
+//////////////////////////////////////////////
+///Express Controllers
+//////////////////////////////////////////////
+
+app.use(express.static(__dirname + '/../client'));
+
+
+//////////////////////////////////////////////
+///Socket Controllers
+//////////////////////////////////////////////
+
+//Controllers -> might need to move someplace els
+io.on('connection', function(socket) {
+
+//listeners and controllers here
+});
+
+
+/////////////////////////////////////////////
+///Server init
+////////////////////////////////////////////
+server.listen(port);
+
+///Exportation
+module.exports = app;
