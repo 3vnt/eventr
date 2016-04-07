@@ -1,0 +1,11 @@
+<!-- This entire HTML file can directly access any property on the $scope object on the PomodoroController because we defined the relationship in the routeProvider! 
+For example, we can directly access the timeLeft property and startTimer method on the $scope object -->
+<div id="pomodoroContainer"> 
+
+  <div id="timer"> {{ timeLeft.seconds }} seconds </div>
+
+  <button class="btn startBtn" ng-click="startTimer()"> Start </button>
+  <button class="btn stopBtn" ng-click="stopTimer()"> Stop </button>
+  <button class="btn resetBtn" ng-click="resetTimer()"> Reset </button>
+
+</div>

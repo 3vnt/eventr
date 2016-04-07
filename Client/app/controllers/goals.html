@@ -1,0 +1,22 @@
+<div id="goalFormContainer">
+
+  <!-- ng-model will bind the user-inputted text to a property on the GoalsController $scope
+  If the property does not exist, it will create that property. -->
+  <input type="text" placeholder="enter a new goal" ng-model="goal.text"/>
+
+  <!-- Invoke addGoal on GoalsController when button is clicked. GoalsController will tell GoalsFactory to send a POST request to the server with the goal -->
+  <button class="btn" ng-click="addGoal()">Add Goal</button>
+</div>
+
+<div id="allGoalsContainer">
+  <input type="text" placeholder="filter goals" ng-model="filterText"/>
+
+  <!-- Show all goals -->
+  <ul>
+    <li ng-repeat="goal in data.goals | filter:filterText">
+      <input type="checkbox"></input>
+      {{ goal.text }}
+    </li>
+  </ul>
+
+</div>

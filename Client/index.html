@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <meta charset="utf-8" />
+    <title>EVENTR</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+
+  <body>
+    <h1>EVENTR</h1>
+
+    <!-- User Navigation Bar: -->
+
+    <!-- Notification Bar: -->
+    NOTIFICATION BAR GOES HERE
+
+    <!-- Navigation Bar: -->
+    <nav class="navigation"> 
+      <ul>
+        <li><a href="#/events">Events</a></li>
+      </ul>
+    </nav>
+
+    <div ng-view></div>
+
+    <!-- Add all dependencies here: -->
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-route/angular-route.js"></script>
+
+    <script src="app/app.js"></script> 
+    <script src="app/controllers/events.js"></script>
+    <script src="app/factories/factories.js"></script>
+
+  </body>
+</html>
+

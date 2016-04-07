@@ -1,0 +1,185 @@
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/*body {
+  border: 1px black dotted;
+}*/
+
+h1 {
+  color: rgb(97, 97, 97);
+  font-size: 50px;
+  background-color: rgb(196, 222, 255);
+  text-shadow: rgb(224, 224, 224) 1px 1px 0px;
+  padding: 5px 30px;
+}
+
+.navigation ul {
+  margin-left: 40px;
+  list-style: none; /* remove bullet symbols */
+}
+
+.navigation li {
+  float: left; /* make all list elements on same line */
+}
+
+.navigation li a {
+  text-decoration: none; /* remove default hyperline blue underline */
+/*  color: black;
+  font-size: 20px;
+  font-weight: 500;
+  background-color: #97C9FF;*/
+  border:1px solid #25729a; -webkit-border-radius: 0px; -moz-border-radius: 0px;border-radius: 0px;font-size:12px;font-family:arial, helvetica, sans-serif; padding: 10px 40px 10px 30px; text-decoration:none; display:inline-block;text-shadow: -1px -1px 0 rgba(0,0,0,0.3);font-weight:bold; color: #FFFFFF;
+  background-color: #3093c7; background-image: -webkit-gradient(linear, left top, left bottom, from(#3093c7), to(#1c5a85));
+  background-image: -webkit-linear-gradient(top, #3093c7, #1c5a85);
+  background-image: -moz-linear-gradient(top, #3093c7, #1c5a85);
+  background-image: -ms-linear-gradient(top, #3093c7, #1c5a85);
+  background-image: -o-linear-gradient(top, #3093c7, #1c5a85);
+  background-image: linear-gradient(to bottom, #3093c7, #1c5a85);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#3093c7, endColorstr=#1c5a85);
+}
+
+.navigation li a:hover {
+  /*background-color: #D3B3FF;*/
+  border:1px solid #1c5675;
+  background-color: #26759e; background-image: -webkit-gradient(linear, left top, left bottom, from(#26759e), to(#133d5b));
+  background-image: -webkit-linear-gradient(top, #26759e, #133d5b);
+  background-image: -moz-linear-gradient(top, #26759e, #133d5b);
+  background-image: -ms-linear-gradient(top, #26759e, #133d5b);
+  background-image: -o-linear-gradient(top, #26759e, #133d5b);
+  background-image: linear-gradient(to bottom, #26759e, #133d5b);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#26759e, endColorstr=#133d5b);
+}
+
+.navigation li a:select {
+  background-color: #95B6FF;
+}
+
+#goalFormContainer {
+  clear: both;
+  margin: 100px 0px 0px 60px;
+}
+
+#goalFormContainer .btn {
+  position: relative;
+  background-color: #4CAF50;
+  border: none;
+  font-size: 17px;
+  color: #FFFFFF;
+  margin-left: 6px;
+  padding: 6px;
+  width: 100px;
+  text-align: center;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#goalFormContainer .btn:after {
+  content: "";
+  background: #90EE90;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px!important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+#goalFormContainer .btn:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+
+#allGoalsContainer {
+  clear: both;
+  margin: 20px 0px 0px 60px;
+}
+
+#allGoalsContainer ul {
+  list-style: none;
+  margin: 30px 20px;
+}
+
+#allGoalsContainer ul li {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+input[type="text"] {
+  width: 400px;
+  font-size: 15px;
+}
+
+#pomodoroContainer {
+  clear: both;
+  margin: 20px 0px 0px 60px;
+}
+
+#timer {
+  padding-top: 50px;
+  font-size: 60px;
+  font-weight: 900;
+}
+
+/* The following block will contain CSS for the Start, Stop, and Reset buttons */
+#pomodoroContainer .btn {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 4px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 4px 8px;
+  /*-webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+#pomodoroContainer .startBtn {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+#pomodoroContainer .startBtn:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#pomodoroContainer .stopBtn {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #f44336;
+}
+
+#pomodoroContainer .stopBtn:hover {
+  background-color: #f44336;
+  color: white;
+}
+#pomodoroContainer .resetBtn {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #555555;
+}
+
+#pomodoroContainer .resetBtn:hover {
+  background-color: #555555;
+  color: white;
+}
+
+#weatherContainer {
+  clear: both;
+  margin: 20px 0px 0px 60px;
+}
+
+
