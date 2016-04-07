@@ -1,30 +1,35 @@
-// Create and export a new Angular module called "app". Require all of the modules inside of [ ];
 angular.module('app', [
   'ngRoute',
-  'app.pomodoro',
-  'app.goals',
-  'app.weather',
+  'app.start',
+  'app.createevent',
+  'app.confirmedlobby',
+  'app.preferencevote',
+  'app.finalaccept',
   'app.factories'
   ])
 .config(function($routeProvider, $httpProvider) {
-  // The router is like a doorman. When a person walks through the door of a building they've never been to, the doorman tells them where to go. The person just needs to know the name of the room they're looking for. They don't need to know the exact floor and room number. Likewise, when a person navigates to /goals in the browser, the router will automatically give them app/controllers/goals.html. The person doesn't need to know the exact file path.  
   $routeProvider
-    .when('/pomodoro', {
-      templateUrl: 'app/controllers/pomodoro.html',
-      controller: 'PomodoroController'
+    .when('/', {
+      templateUrl: 'app/templates/start.html',
+      controller: 'StartController'
+    })
+    .when('/createevent', {
+      templateUrl: 'app/templates/createevent.html',
+      controller: 'CreateEventController'
     }) 
-    .when('/goals', {
-      templateUrl: 'app/controllers/goals.html',
-      controller: 'GoalsController'
+    .when('/confirmedlobby', {
+      templateUrl: 'app/templates/confirmedlobby.html',
+      controller: 'ConfirmedLobbyController'
     })
-    .when('/weather', {
-      templateUrl: 'app/controllers/weather.html',
-      controller: 'WeatherController'
+    .when('/preferencevote', {
+      templateUrl: 'app/templates/preferencevote.html',
+      controller: 'PreferenceVoteController'
     })
-    .when('/signout', {
-      //build this later on
+    .when('/finalaccept', {
+      templateUrl: 'app/templates/finalaccept.html',
+      controller: 'FinalAcceptController'
     })
     .otherwise({
-      redirectTo: '/pomodoro'
+      redirectTo: '/'
     });
 });

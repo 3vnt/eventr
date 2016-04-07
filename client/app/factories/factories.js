@@ -1,5 +1,20 @@
 angular.module('app.factories', [])
 
+
+SocketFactory
+
+
+
+
+MySqlFactory
+
+
+
+
+
+
+
+
 .factory('GoalsFactory', function($http) {
   var addGoal = function(goal) {
     return $http({
