@@ -6,9 +6,21 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('underscore');
+var mysql = require('mysql');
+
 
 //Modifiable Settings
 var port = 8080;
+
+/////////////////////////////////////////////
+//Database
+/////////////////////////////////////////////
+
+var connection = mysql.createConnection({
+  host: "???",
+  user: "???",
+  password: "???",
+});
 
 //////////////////////////////////////////////
 ///Express Controllers
