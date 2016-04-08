@@ -1,11 +1,17 @@
 angular.module('app.factories', [])
 
+.factory('CreateEventFactory', function($http) {
+  var addEvent = function(event) {
+    return $http({
+      method: 'POST',
+      url: '' ?????????????
+      data: event
+    });
+  }
+});
+
 
 SocketFactory
-
-
-
-
 MySqlFactory
 
 
