@@ -1,5 +1,31 @@
-DROP DATABASE eventr;
-CREATE DATABASE eventr;
+-- uncomment this line to reset the database
+-- DROP DATABASE eventr;
+
+-- uncomment this line for first run; comment out this line after first run
+-- CREATE DATABASE eventr;
+
+/*--------------------------------------------------------------------------------
+before running this file, you can reset your root password by taking the following 
+  steps (if you forgot your root password)
+
+1. Start mysql without authenticating:                                                       
+   > mysqld --skip-grant-tables
+
+2. in the mysql prompt, update the user to have the password 'a' 
+  > update user set password=PASSWORD("a") where User='root';
+
+3. quit
+  > \q
+
+4. stop mysql
+  > mysqld stop
+  
+5. start mysql again and login 
+  > mysqld start
+  > mysql -u root -p
+  Enter password: •   # enter a here
+-------------------------------------------------------------------------------*/
+
 
 USE eventr;
 
