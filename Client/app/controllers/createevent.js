@@ -1,6 +1,6 @@
 angular.module('app.createevent', ['app.factories'])
 
-.controller('LoginController', function($scope, CreateEventFactory) {
+.controller('CreateEventController', function($scope, socket, $location) {
 
   $scope.eventData = {
     date: '2016-April-05 17:03:00',
@@ -9,12 +9,15 @@ angular.module('app.createevent', ['app.factories'])
   };
 
   $scope.addEvent = function() {
-    CreateEventFactory.addEvent($scope.eventData)
-    .then(function(response) {
-      response.redirect('/pollresults');
-    })
-    .catch(function(error) {
-      console.error(error);
-    })
+    socket.emit('addEvent', $scope.eventData);
+    $location.path('/pollresults');
+
+    // CreateEventFactory.addEvent($scope.eventData)
+    // .then(function(response) {
+    //   response.redirect('/pollresults');
+    // })
+    // .catch(function(error) {
+    //   console.error(error);
+    // })
   }
 });

@@ -1,20 +1,14 @@
 angular.module('app.factories', [])
 
-.factory('CreateEventFactory', function($http) {
-  var addEvent = function(event) {
-    return $http({
-      method: 'POST',
-      url: '' ?????????????
-      data: event
-    });
-  }
-});
-
-
-SocketFactory
-MySqlFactory
-
-
+// .factory('CreateEventFactory', function($http) {
+//   var addEvent = function(event) {
+//     return $http({
+//       method: 'POST',
+//       url: '' ?????????????
+//       data: event
+//     });
+//   }
+// });
 //Factory for using socket.io]
 .factory('socket',function ($rootScope) {
   var socket = io.connect();
@@ -38,13 +32,7 @@ MySqlFactory
         });
       }
     };
-});
-
-
-
-
-
-.factory('GoalsFactory', function($http) {
+}).factory('GoalsFactory', function($http) {
   var addGoal = function(goal) {
     return $http({
       method: 'POST',
