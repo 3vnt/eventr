@@ -1,0 +1,1 @@
+angular.module('app.finalAccept', ['app.factories']);
