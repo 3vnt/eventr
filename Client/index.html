@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <meta charset="utf-8" />
+    <title>EVENTR</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+
+  <body>
+    <h1>EVENTR</h1>
+
+    <!-- User Profile: -->
+    <nav class="usernav">User Navigation</nav>
+
+    <!-- Notification Bar: -->
+    <div class="notifications">Notifications</div>
+
+    <!-- Event Navigation: -->
+    <nav class="navigation"> 
+      <ul>
+        <li><a href="#/events">Events</a></li>
+      </ul>
+    </nav>
+
+    <!-- Views: -->
+    <div ng-view></div>
+
+    <!-- Client side dependencies here: -->
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-route/angular-route.js"></script>
+
+    <script src="app/app.js"></script> 
+    <script src="app/controllers/login.js"></script>
+    <script src="app/controllers/start.js"></script>
+    <script src="app/controllers/createevent.js"></script>
+    <script src="app/controllers/pollresults.js"></script>
+    <script src="app/controllers/preferencevote.js"></script>
+    <script src="app/controllers/finalaccept.js"></script>
+    <script src="app/controllers/confirmedlobby.js"></script>
+    <script src="app/factories/factories.js"></script>
+
+    <!-- Server side Dependencies: -->
+    <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+
+  </body>
+</html>
+
