@@ -2,11 +2,11 @@ angular.module('app', [
   'ngRoute',
   'app.login',
   'app.start',
-  'app.createevent',
-  'app.pollresults',
-  'app.preferencevote',
-  'app.finalaccept',
-  'app.confirmedlobby',
+  'app.createEvent',
+  'app.pollResults',
+  'app.preferenceVote',
+  'app.finalAccept',
+  'app.confirmedLobby',
   'app.factories'
   ])
 .config(function($routeProvider, $httpProvider) {
