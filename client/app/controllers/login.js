@@ -7,6 +7,7 @@ angular.module('app.login', ['app.factories'])
     socket.emit('login', {
       username: $scope.input.name,
       email: $scope.input.email,
+      password: $scope.input.password,
     });
     $location.path('/start');
   }

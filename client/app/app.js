@@ -1,6 +1,7 @@
 angular.module('app', [
   'ngRoute',
   'app.login',
+  'app.signup',
   'app.start',
   'app.createEvent',
   'app.pollResults',
@@ -47,6 +48,10 @@ angular.module('app', [
     .when('/logout', {
       templateUrl: 'app/templates/logout.html',
       controller: 'LogoutController'
+    })
+    .when('/signup', {
+      templateUrl: 'app/templates/signup.html',
+      controller: 'SignupController'
     })
     .otherwise({
       redirectTo: '/login'
