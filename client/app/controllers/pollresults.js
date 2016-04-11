@@ -1,6 +1,6 @@
 angular.module('app.pollResults', ['app.factories'])
 
-.controller('PollResultsController', function($scope, socket) {
+.controller('PollResultsController', function($scope, $location, socket) {
   // TODO: is this right?
   io.connect();
   // TODO: check if user is Host, 
@@ -40,8 +40,9 @@ angular.module('app.pollResults', ['app.factories'])
       // NOTE: currently just logs final choices
       // TODO: should send final choices to server
       console.log(finalChoices);
+      socket.emit('finalChoices', finalChoices);
       $scope.showWarning = false;
-      socket.emit
+      $location.path('/finalaccept');
     } else {
       $scope.showWarning = true;
     }
