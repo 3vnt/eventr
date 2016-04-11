@@ -7,7 +7,7 @@ angular.module('app.pollResults', ['app.factories'])
   //      if is: enable choosy things.
   //      if not: just show results so far.
 
-  // get poll results from server.
+  // TODO: get poll results from server.
   $scope.pollResults = 'poll results';
   $scope.showWarning = false;
   $scope.selectedEventAndDate = {};
