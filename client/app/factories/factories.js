@@ -110,4 +110,6 @@ angular.module('app.factories', [])
 
 })
 
+.factory()
+
 ;
