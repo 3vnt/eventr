@@ -8,7 +8,6 @@ var io = require('socket.io')(server);
 var _ = require('underscore');
 var mysql = require('mysql');
 
-
 //Modifiable Settings
 var port = 8080;
 
@@ -16,19 +15,17 @@ var port = 8080;
 
 var loggedIn = {};
 
-
 /////////////////////////////////////////////
 //Database
 /////////////////////////////////////////////
 
-// can be used with `Gulp start` 
-// var connection = mysql.createConnection(process.env.MYSQL);
 var db = mysql.createConnection({
   host: "localhost",
   user: 'root',
   database: "eventr",
 });
 
+//Testing
 db.connect(function(err) {
   if (err) {
     console.log('Connection Error:  ', err);
@@ -36,7 +33,6 @@ db.connect(function(err) {
   }
   console.log('Successful Connection');
 })
-
 
 //
 // var db = openDatabase();
@@ -58,15 +54,20 @@ app.use(express.static(__dirname + '/../client'));
 //Controllers -> might need to move someplace els
 io.on('connection', function(socket) {
 
-  socket.on('signup', function(singupData) {
-    //check if email already in use
-
-    //check if userID is unique
-    // else {
-    //   //Store thing into database
-    //   socket.emit('success', /*...*/);
-    // }
-  })
+  socket.on('signup', function(signupData) {
+    console.log('received');
+    var date = new Date();
+    db.query("INSERT INTO users (username, created_at, email, password) Values (?, ?, ?, ?);",
+      signupData.username, date, signupData.email, signupData.password,
+      function(err, result) {
+        if (err) {
+          console.log(err);
+          socket.emit('failed');
+          return;
+        };
+        socket.emit('success');
+      });
+  });
 
   socket.on('login', function(loginData) {
     //save into socket loggedIn user array
