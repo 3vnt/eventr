@@ -9,6 +9,10 @@
   <body>
     <h1>EVENTR</h1>
 
+    <ul>
+        <li ng-controller="LogoutController"><a ng-click="logoutUser()">LOGOUT</a></li>
+    </ul>
+
     <!-- User Profile: -->
     <nav class="usernav">User Navigation</nav>
 
@@ -16,7 +20,7 @@
     <div class="notifications">Notifications</div>
 
     <!-- Event Navigation: -->
-    <nav class="navigation"> 
+    <nav class="navigation">
       <ul>
         <li><a href="#/events">Events</a></li>
       </ul>
@@ -29,7 +33,7 @@
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
 
-    <script src="app/app.js"></script> 
+    <script src="app/app.js"></script>
     <script src="app/controllers/login.js"></script>
     <script src="app/controllers/start.js"></script>
     <script src="app/controllers/createevent.js"></script>
@@ -37,6 +41,7 @@
     <script src="app/controllers/preferencevote.js"></script>
     <script src="app/controllers/finalaccept.js"></script>
     <script src="app/controllers/confirmedlobby.js"></script>
+    <script src="app/controllers/logout.js"></script>
     <script src="app/factories/factories.js"></script>
 
     <!-- Server side Dependencies: -->
