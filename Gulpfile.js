@@ -2,7 +2,8 @@ process.env.NODE_ENV = 'test';
 process.env.MYSQL = {
   host: 'http://127.0.0.1:3306',
   user: 'root',
-  password: 'a'
+  password: 'a',
+  database: 'eventr'
 };
 process.env.JWT_SECRET = 'SECRET'; // for future use
 
@@ -26,4 +27,4 @@ gulp.task('start', function () {
   })
 });
 
-gulp.task('', function () {});
+// gulp.task('', function () {});
