@@ -21,11 +21,7 @@ var loggedIn = {};
 //Database
 /////////////////////////////////////////////
 
-var connection = mysql.createConnection({
-  host: "???",
-  user: "???",
-  password: "???",
-});
+var connection = mysql.createConnection(process.env.MYSQL);
 
 //////////////////////////////////////////////
 ///Express Controllers

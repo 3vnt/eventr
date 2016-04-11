@@ -1,3 +1,28 @@
 <div ng-controller="PollResultsController">
-  {{ pollResults }}
+  <hr>
+  <h3> Dates </h3>
+  <ul ng-model="dateChoices">
+    <li 
+      ng-repeat="dateObject in dateChoices | orderBy:'-numVotes'"
+      ng-click="hostSelectFinalChoice('date', dateObject)" 
+      ng-class="{'selectedEventAndDate': toggleClass('date', dateObject) }">
+      <span>Date: {{ dateObject.date }}</span>
+      <span>Votes: {{ dateObject.numVotes }}</span>
+    </li>
+  </ul>
+  <hr>
+  <h3> Events </h3>
+  <ul ng-model="eventChoices">
+    <li 
+      ng-repeat="eventObject in eventChoices | orderBy:'-numVotes'" 
+      ng-click="hostSelectFinalChoice('event', eventObject)"
+      ng-class="{'selectedEventAndDate': toggleClass('event', eventObject) }">
+      <span>Date: {{ eventObject.event }}</span>
+      <span>Votes: {{ eventObject.numVotes }}</span>
+    </li>
+  </ul>
+  <hr>
+  <h5 ng-show="showWarning">Please select a final choice for both a date and an event!</h5>
+  <button ng-click="sendConfirmation(selectedEventAndDate)">Confirm Event Date and Time</button>
 </div>
+
