@@ -30,7 +30,7 @@ before running this file, you can reset your root password by taking the followi
 USE eventr;
 
 CREATE TABLE users (
-	id int NOT NULL,
+	id int NOT NULL AUTO_INCREMENT,
 	created_at DATETIME NOT NULL,
 	username varchar(100) NOT NULL,
 	email varchar(100) NOT NULL UNIQUE,
@@ -44,12 +44,13 @@ CREATE TABLE events_users (
 );
 
 CREATE TABLE events (
-	id int NOT NULL,
+	id int NOT NULL AUTO_INCREMENT,
 	created_at DATETIME NOT NULL,
 	updated_at DATETIME NOT NULL,
 	event_name varchar(100) NOT NULL,
 	event_date DATE NOT NULL,
 	event_location varchar(200),
+	response_deadline DATE NOT NULL,
 	total_cost FLOAT NOT NULL,
 	event_host int NOT NULL,
 	PRIMARY KEY (id)
@@ -62,7 +63,7 @@ CREATE TABLE users_choices (
 );
 
 CREATE TABLE questions (
-	id int NOT NULL,
+	id int NOT NULL AUTO_INCREMENT,
 	created_at DATETIME NOT NULL,
 	text varchar(140) NOT NULL,
 	creator_id int NOT NULL,
@@ -71,7 +72,7 @@ CREATE TABLE questions (
 );
 
 CREATE TABLE messages (
-	id int NOT NULL,
+	id int NOT NULL AUTO_INCREMENT,
 	created_at DATE NOT NULL,
 	text varchar(500) NOT NULL,
 	PRIMARY KEY (id)
@@ -83,7 +84,7 @@ CREATE TABLE users_messages (
 );
 
 CREATE TABLE choices (
-	id int NOT NULL,
+	id int NOT NULL AUTO_INCREMENT,
 	text varchar(140) NOT NULL,
 	isWinningChoice bool NOT NULL,
 	question_id int NOT NULL,
@@ -91,7 +92,7 @@ CREATE TABLE choices (
 );
 
 CREATE TABLE payment (
-	id int NOT NULL,
+	id int NOT NULL AUTO_INCREMENT,
 	created_at DATETIME NOT NULL,
   payment_deadline DATETIME NOT NULL,
 	payment_amount FLOAT NOT NULL,
