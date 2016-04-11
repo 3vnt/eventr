@@ -1,4 +1,4 @@
-angular.module('app.createevent', ['app.factories'])
+angular.module('app.createEvent', ['app.factories'])
 
 .controller('CreateEventController', function($scope, socket, $location) {
 
