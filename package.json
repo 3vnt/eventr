@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon Server/server.js"
+    "start": "nodemon server/server.js",
+    "lint": "eslint ./",
+    "postinstall": "curl -s https://raw.githubusercontent.com/hackreactor-labs/pomander/master/bin/install | bash"
   },
   "repository": {
     "type": "git",
@@ -20,9 +22,12 @@
   "dependencies": {
     "express": "^4.13.4",
     "mysql": "^2.10.2",
-    "nodemon": "^1.9.1",
     "request": "^2.70.0",
     "socket.io": "^1.4.5",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.1",
+    "eslint-config-hackreactor": "git://github.com/hackreactor-labs/eslint-config-hackreactor"
   }
 }
