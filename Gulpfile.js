@@ -1,6 +1,10 @@
 process.env.NODE_ENV = 'test';
-// process.env.JWT_SECRET = 'SECRET'; // for future use
-process.env.MYSQL_ADDRESS = 'http://127.0.0.1:3306';
+process.env.MYSQL = {
+  host: 'http://127.0.0.1:3306',
+  user: 'root',
+  password: 'a'
+};
+process.env.JWT_SECRET = 'SECRET'; // for future use
 
 var gulp = require('gulp');
 var sync = require('browser-sync');
@@ -17,9 +21,8 @@ var paths = {
 
 gulp.task('start', function () {
   nodemon({
-    script: './server/app.js',
-    ignore: 'node_modules/**/*.js',
-    
+    script: './server/server.js',
+    ignore: 'node_modules/**/*.js'
   })
 });
 
