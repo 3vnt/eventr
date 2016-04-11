@@ -1,4 +1,7 @@
-<div>
-Login or Signup
-
+<div ng-controller="LoginController">
+<form>
+  Name: <input type="text" ng-model = "input.name" required /> <br />
+  Email: <input type="email" ng-model = "input.email" required /> <br />
+  <input type="submit" ng-click="submitUser()" value="Add User">
+</form> <br />
 </div>

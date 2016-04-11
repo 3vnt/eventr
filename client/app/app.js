@@ -7,6 +7,7 @@ angular.module('app', [
   'app.preferenceVote',
   'app.finalAccept',
   'app.confirmedLobby',
+  'app.logout',
   'app.factories'
   ])
 .config(function($routeProvider, $httpProvider) {
@@ -22,7 +23,7 @@ angular.module('app', [
     .when('/createevent', {
       templateUrl: 'app/templates/createevent.html',
       controller: 'CreateEventController'
-    }) 
+    })
     .when('/pollresults', {
       templateUrl: 'app/templates/pollresults.html',
       controller: 'PollResultsController'
@@ -39,8 +40,16 @@ angular.module('app', [
       templateUrl: 'app/templates/confirmedlobby.html',
       controller: 'ConfirmedLobbyController'
     })
+    .when('/login', {
+      templateUrl: 'app/templates/login.html',
+      controller: 'LoginController'
+    })
+    .when('/logout', {
+      templateUrl: 'app/templates/logout.html',
+      controller: 'LogoutController'
+    })
     .otherwise({
-      redirectTo: '/'
+      redirectTo: '/login'
     });
 });
 
