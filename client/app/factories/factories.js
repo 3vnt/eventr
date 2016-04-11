@@ -1,16 +1,5 @@
 angular.module('app.factories', [])
 
-<<<<<<< HEAD
-// .factory('CreateEventFactory', function($http) {
-//   var addEvent = function(event) {
-//     return $http({
-//       method: 'POST',
-//       url: '' ?????????????
-//       data: event
-//     });
-//   }
-// });
-=======
 .factory('CreateEventFactory', function($http) {
   var addEvent = function(event) {
     return $http({
@@ -26,7 +15,6 @@ angular.module('app.factories', [])
 // MySqlFactory
 
 
->>>>>>> 1a4ee8b704093f24f5aca1571c5c0a926a40b3f8
 //Factory for using socket.io]
 .factory('socket', function ($rootScope) {
   var socket = io.connect();
@@ -50,10 +38,6 @@ angular.module('app.factories', [])
         });
       }
     };
-<<<<<<< HEAD
-}).factory('GoalsFactory', function($http) {
-  var addGoal = function(goal) {
-=======
 })
 
 
@@ -62,7 +46,6 @@ angular.module('app.factories', [])
 
 .factory('QuestionsFactory', function($http) {
   var addQuestion = function(question) {
->>>>>>> 1a4ee8b704093f24f5aca1571c5c0a926a40b3f8
     return $http({
       method: 'POST',
       url: '/api/questions',
