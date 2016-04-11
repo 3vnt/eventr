@@ -5,8 +5,7 @@
     <li 
       ng-repeat="dateObject in dateChoices | orderBy:'-numVotes'"
       ng-click="hostSelectFinalChoice('date', dateObject)" 
-      ng-class="{'selectedEventAndDate': toggleClass('date', dateObject) }"
-    >
+      ng-class="{'selectedEventAndDate': toggleClass('date', dateObject) }">
       <span>Date: {{ dateObject.date }}</span>
       <span>Votes: {{ dateObject.numVotes }}</span>
     </li>
