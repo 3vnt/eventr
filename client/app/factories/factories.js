@@ -71,6 +71,21 @@ angular.module('app.factories', [])
     addQuestion: addQuestion,
     sendResponse: sendResponse
   };
+})
+
+
+.factory('PollResultsFactory', function($http) {
+  // should not be $http. should instead be socket logic
+  var getResults = function() {
+    return $http({
+      method: 'GET',
+      url: '/api/responses'
+    });
+  };
+
+  return {
+    getResults: getResults
+  };
 });
 
 
