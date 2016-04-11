@@ -83,4 +83,33 @@ angular.module('app.factories', [])
   return {
     getResults: getResults
   };
-});
+})
+
+
+.factory('ConfirmedLobby', function($http) {
+
+  var lobby = function() {
+    return $http({
+      method: 'GET',
+      url: '/api/confirmedlobby'
+    })
+  }
+})
+
+.factory('FinalAccept', function($http) {
+  var accept = function() {
+    return $http({
+      method: 'GET',
+      url: '/api/accept'
+    })
+  }
+
+  return {
+    accept: accept
+  }
+
+})
+
+.factory()
+
+;
