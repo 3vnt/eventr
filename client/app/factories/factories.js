@@ -41,9 +41,6 @@ angular.module('app.factories', [])
 })
 
 
-
-
-
 .factory('QuestionsFactory', function($http) {
   var addQuestion = function(question) {
     return $http({
@@ -87,11 +84,3 @@ angular.module('app.factories', [])
     getResults: getResults
   };
 });
-
-
-
-
-
-
-
-
