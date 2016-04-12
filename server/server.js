@@ -8,7 +8,6 @@ var io = require('socket.io')(server);
 var _ = require('underscore');
 var mysql = require('mysql');
 
-
 //Modifiable Settings
 var port = 8080;
 
@@ -16,19 +15,17 @@ var port = 8080;
 
 var loggedIn = {};
 
-
 /////////////////////////////////////////////
 //Database
 /////////////////////////////////////////////
 
-// can be used with `Gulp start` 
-// var connection = mysql.createConnection(process.env.MYSQL);
 var db = mysql.createConnection({
   host: "localhost",
   user: 'root',
   database: "eventr",
 });
 
+//Testing
 db.connect(function(err) {
   if (err) {
     console.log('Connection Error:  ', err);
@@ -36,7 +33,6 @@ db.connect(function(err) {
   }
   console.log('Successful Connection');
 })
-
 
 //
 // var db = openDatabase();
@@ -58,21 +54,42 @@ app.use(express.static(__dirname + '/../client'));
 //Controllers -> might need to move someplace els
 io.on('connection', function(socket) {
 
-  socket.on('signup', function(singupData) {
-    //check if email already in use
-
-    //check if userID is unique
-    // else {
-    //   //Store thing into database
-    //   socket.emit('success', /*...*/);
-    // }
-  })
+  socket.on('signup', function(signupData) {
+    var newUser = {
+      username: signupData.username,
+      email: signupData.email,
+      password: signupData.password,
+      created_at: '2016-04-10 17:10:23',
+    };
+    db.query("INSERT INTO users SET ?" , newUser, function(err, result) {
+        if (err) {
+          console.log(err);
+          socket.emit('failed');
+          return;
+        };
+        loggedIn[signupData.email] = socket.id;
+        socket.emit('success');
+    });
+  });
 
   socket.on('login', function(loginData) {
     //save into socket loggedIn user array
-    console.log("socket object", socket);
-    console.log("ID", socket.id);
-    loggedIn[loginData.email] = socket.id;
+
+    db.query('SELECT password FROM users WHERE email = ?', loginData.email, function(err, data) {
+      if (err) {
+        console.log(err);
+        socket.emit('noUser');
+        return;
+      }
+      console.log(data[0]);
+      if (data[0].password === loginData.password) {
+        loggedIn[loginData.email] = socket.id;
+        socket.emit('authenticated', {});
+        return;
+      }
+      socket.emit('invalidPassword');
+    });
+
     //do something to save stuff onto database;
   });
 

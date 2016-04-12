@@ -54,7 +54,7 @@ angular.module('app', [
       controller: 'SignupController'
     })
     .otherwise({
-      redirectTo: '/login'
+      redirectTo: '/signup'
     });
 });
 
