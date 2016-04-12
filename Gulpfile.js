@@ -1,10 +1,4 @@
 process.env.NODE_ENV = 'test';
-process.env.MYSQL = {
-  host: 'http://127.0.0.1:3306',
-  user: 'root',
-  password: 'a',
-  database: 'eventr'
-};
 process.env.JWT_SECRET = 'SECRET'; // for future use
 
 var gulp = require('gulp');
