@@ -1,8 +1,8 @@
 -- uncomment this line to reset the database
--- DROP DATABASE eventr;
+DROP DATABASE eventr;
 
 -- uncomment this line for first run; comment out this line after first run
- -- CREATE DATABASE eventr;
+CREATE DATABASE eventr;
 
 /*--------------------------------------------------------------------------------
 before running this file, you can reset your root password by taking the following

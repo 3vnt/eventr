@@ -55,18 +55,22 @@ app.use(express.static(__dirname + '/../client'));
 io.on('connection', function(socket) {
 
   socket.on('signup', function(signupData) {
+
     console.log('received');
-    var date = new Date();
-    db.query("INSERT INTO users (username, created_at, email, password) Values (?, ?, ?, ?);",
-      signupData.username, date, signupData.email, signupData.password,
-      function(err, result) {
+    var newUser = {
+      username: signupData.username,
+      email: signupData.email,
+      password: signupData.password,
+      created_at: '2016-04-10 17:10:23',
+    };
+    db.query("INSERT INTO users SET ?" , newUser, function(err, result) {
         if (err) {
           console.log(err);
           socket.emit('failed');
           return;
         };
         socket.emit('success');
-      });
+    });
   });
 
   socket.on('login', function(loginData) {
