@@ -10,11 +10,6 @@ angular.module('app.factories', [])
   }
 })
 
-
-// SocketFactory
-// MySqlFactory
-
-
 //Factory for using socket.io]
 .factory('socket', function ($rootScope) {
   var socket = io.connect();
@@ -83,4 +78,12 @@ angular.module('app.factories', [])
   return {
     getResults: getResults
   };
+})
+
+
+.factory('AuthFactory', function($http, $location, $window) {
+  // Trade username/password for a JWT from the server and store that JWT in localstorage.
+  var login = function(user) {
+    return 
+  }
 });

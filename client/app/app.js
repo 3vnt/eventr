@@ -7,6 +7,7 @@ angular.module('app', [
   'app.preferenceVote',
   'app.finalAccept',
   'app.confirmedLobby',
+  'app.auth',
   'app.logout',
   'app.factories'
   ])
@@ -14,11 +15,12 @@ angular.module('app', [
   $routeProvider
     .when('/', {
       templateUrl: 'app/templates/login.html',
-      controller: 'LoginController'
+      controller: 'AuthController'
     })
     .when('/start', {
       templateUrl: 'app/templates/start.html',
-      controller: 'StartController'
+      controller: 'StartController',
+      authenticate: true
     })
     .when('/createevent', {
       templateUrl: 'app/templates/createevent.html',
@@ -42,20 +44,44 @@ angular.module('app', [
     })
     .when('/login', {
       templateUrl: 'app/templates/login.html',
-      controller: 'LoginController'
+      controller: 'AuthController'
     })
     .when('/logout', {
       templateUrl: 'app/templates/logout.html',
-      controller: 'LogoutController'
+      controller: 'AuthController'
     })
     .otherwise({
       redirectTo: '/login'
     });
+
+    // Inject an interceptor to stop all outbound requests and look in local storage to find the user's token and then add it to the header so the server can validate the request
+    $httpProvider.interceptors.push('TokensFactory');
+})
+.factory('TokensFactory', function($window) {
+  var attachToken = {
+    request: function(object) {
+      var jwt = $window.localStorage.getItem('com.eventr');
+      if (jwt) {
+        object.headers['x-access-token'] = jwt;
+      }
+      object.headers['Allow-Control-Allow-Origin'] = '*';
+      return object;
+    }
+  };
+  return attachToken;
+})
+.run(function($rootScope, $location, Auth) {
+  // listen for anytime angular tries to change routes. When it tries, we look for the token in localstorage and send that token to the server to see if it's valid.
+  $rootScope.$on('$routeChangeStart', function(event, next, current) {
+    if (next.$$route.originalPath === '/logout') {
+      Auth.logout();
+    }
+
+    if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
+      $location.path('/login');
+    }
+  });
 });
-
-// Insert Authentication here: //////////////////////
-
-
 
 
 
