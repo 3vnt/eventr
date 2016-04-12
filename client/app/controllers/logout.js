@@ -1,6 +1,6 @@
 angular.module('app.logout', ['app.factories'])
 
-.controller('LogoutController', function($scope, socket, $location) {
+.controller('LogoutController', function($scope, $location, socket) {
 
   $scope.logoutUser = function() {
     socket.emit('logout');

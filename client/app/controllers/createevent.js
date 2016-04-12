@@ -1,6 +1,6 @@
 angular.module('app.createEvent', ['app.factories'])
 
-.controller('CreateEventController', function($scope, socket, $location) {
+.controller('CreateEventController', function($scope, $location, socket) {
 
   $scope.eventData = {
     date: '2016-April-05 17:03:00',

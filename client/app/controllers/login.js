@@ -1,6 +1,6 @@
 angular.module('app.login', ['app.factories'])
 
-.controller('LoginController', function($scope, socket, $location) {
+.controller('LoginController', function($scope, $location, socket) {
 
   $scope.message = '';
   //Submits login information for user

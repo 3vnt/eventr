@@ -1,8 +1,6 @@
 angular.module('app.pollResults', ['app.factories'])
 
 .controller('PollResultsController', function($scope, $location, socket) {
-  // TODO: is this right?
-  io.connect();
   // TODO: check if user is Host, 
   //      if is: enable choosy things.
   //      if not: just show results so far.
