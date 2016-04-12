@@ -55,8 +55,6 @@ app.use(express.static(__dirname + '/../client'));
 io.on('connection', function(socket) {
 
   socket.on('signup', function(signupData) {
-
-    console.log('received');
     var newUser = {
       username: signupData.username,
       email: signupData.email,
@@ -69,15 +67,29 @@ io.on('connection', function(socket) {
           socket.emit('failed');
           return;
         };
+        loggedIn[signupData.email] = socket.id;
         socket.emit('success');
     });
   });
 
   socket.on('login', function(loginData) {
     //save into socket loggedIn user array
-    console.log("socket object", socket);
-    console.log("ID", socket.id);
-    loggedIn[loginData.email] = socket.id;
+
+    db.query('SELECT password FROM users WHERE email = ?', loginData.email, function(err, data) {
+      if (err) {
+        console.log(err);
+        socket.emit('noUser');
+        return;
+      }
+      console.log(data[0]);
+      if (data[0].password === loginData.password) {
+        loggedIn[loginData.email] = socket.id;
+        socket.emit('authenticated', {});
+        return;
+      }
+      socket.emit('invalidPassword');
+    });
+
     //do something to save stuff onto database;
   });
 
