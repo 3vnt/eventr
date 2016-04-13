@@ -1,6 +1,6 @@
 /* to run this file, from the root directory of the project
 
-mysql -u root database < server/database/3vnt_mysql_create.sql
+mysql -u root < server/database/3vnt_mysql_create.sql
 
 ... include -p if you set a password
 */
@@ -55,6 +55,7 @@ CREATE TABLE events (
 	created_at DATETIME NOT NULL,
 	updated_at DATETIME NOT NULL,
 	response_deadline DATE NOT NULL,
+	event_name varchar(100) NOT NULL,
 	total_cost float,
 	event_host int NOT NULL,
 	event_activity int,
