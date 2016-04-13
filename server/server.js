@@ -110,13 +110,16 @@ io.on('connection', function(socket) {
   ////createEvent View
   socket.on('addEvent', function(data) {
     //Store data into database;
+
+    var userEmail = util.findEmail(socket.id, loggedIn);
+
     var event = {
         created_at: util.mysqlDatetime(),
         updated_at: util.mysqlDatetime(),
-        name: data.name,
+        event_name: data.name,
         response_deadline: data.response_deadline,
         total_cost: data.cost,
-        event_host: '??',
+        event_host: util.findUser(db, userEmail),
     };
 
     db.query('INSERT INTO events SET ?', event, function(err, data) {
