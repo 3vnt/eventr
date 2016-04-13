@@ -3,21 +3,44 @@ angular.module('app.createEvent', ['app.factories'])
 .controller('CreateEventController', function($scope, socket, $location) {
 
   $scope.eventData = {
-    date: '2016-April-05 17:03:00',
-    deadline: '2016-April-12 17:03:00',
-    emailList: {'b3563195@trbvn.com': 'b3563195@trbvn.com'}
+    deadline: '2016-05-01',
+    friends: {},
+    activities: {},
+    locations: {},
   };
+
+  $scope.addFriend = function() {
+    $scope.eventData.friends[$scope.friendText] = $scope.friendText;
+    $scope.friendText ='';
+  };
+
+  $scope.removeFriend =function(friend) {
+    delete $scope.eventData.friends[friend];
+  };
+
+  $scope.addActivity = function() {
+    $scope.eventData.activities[$scope.activityText] = $scope.activityText;
+    console.log($scope.eventData.activities);
+    $scope.activityText ='';
+  };
+
+  $scope.removeActivity =function(activity) {
+    delete $scope.eventData.activities[activity];
+  };
+
+   $scope.addLocation = function() {
+    $scope.eventData.locations[$scope.locationText] = $scope.locationText;
+    $scope.locationText ='';
+  };
+
+  $scope.removeLocation =function(location) {
+    delete $scope.eventData.locations[location];
+  };
+
 
   $scope.addEvent = function() {
     socket.emit('addEvent', $scope.eventData);
     $location.path('/pollresults');
+  };
 
-    // CreateEventFactory.addEvent($scope.eventData)
-    // .then(function(response) {
-    //   response.redirect('/pollresults');
-    // })
-    // .catch(function(error) {
-    //   console.error(error);
-    // })
-  }
 });
