@@ -7,6 +7,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('underscore');
 var mysql = require('mysql');
+var util = require('./utilities');
 
 //Modifiable Settings
 var port = 8080;
@@ -54,12 +55,13 @@ app.use(express.static(__dirname + '/../client'));
 //Controllers -> might need to move someplace els
 io.on('connection', function(socket) {
 
+  //Signup Listener
   socket.on('signup', function(signupData) {
     var newUser = {
       username: signupData.username,
       email: signupData.email,
       password: signupData.password,
-      created_at: '2016-04-10 17:10:23',
+      created_at: util.mysqlDatetime(),   //need to be reformatted -> currently hardcoded
     };
     db.query("INSERT INTO users SET ?" , newUser, function(err, result) {
         if (err) {
@@ -72,6 +74,8 @@ io.on('connection', function(socket) {
     });
   });
 
+
+  //Login Listener
   socket.on('login', function(loginData) {
     //save into socket loggedIn user array
 
@@ -93,6 +97,7 @@ io.on('connection', function(socket) {
     //do something to save stuff onto database;
   });
 
+  //Logout Listener
   socket.on('logout', function() {
     for (var key in loggedIn) {
       if (loggedIn[key] === socket.id) {
