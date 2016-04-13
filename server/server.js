@@ -114,8 +114,7 @@ io.on('connection', function(socket) {
         created_at: util.mysqlDatetime(),
         updated_at: util.mysqlDatetime(),
         name: data.name,
-        date: '??',
-        location: data.location,
+        response_deadline: data.response_deadline,
         total_cost: data.cost,
         event_host: '??',
     };
