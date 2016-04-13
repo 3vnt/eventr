@@ -1,6 +1,6 @@
 /* to run this file, from the root directory of the project
 
-mysql -u root database < server/database/3vnt_mysql_create.sql
+mysql -u root < server/database/3vnt_mysql_create.sql
 
 ... include -p if you set a password
 */
