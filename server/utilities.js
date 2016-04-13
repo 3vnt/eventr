@@ -25,6 +25,8 @@ exports.findUser = function(db, email) {
   });
 };
 
+
+//use table joining
 exports.eventBroadcast = function(io, db, event, loggedIn, data) {
   //DB query events - find event ID
   db.query('SELECT id FROM events WHERE name = ?', event, function(err, eventID) {
