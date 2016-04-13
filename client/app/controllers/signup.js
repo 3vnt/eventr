@@ -41,7 +41,6 @@ angular.module('app.signup', ['app.factories'])
     $scope.message = 'Email already in use please choose a new one';
   });
 
-
   socket.on('failed', function() {
     $scope.username = '';
     $scope.pasword = '';

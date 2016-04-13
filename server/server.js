@@ -7,6 +7,8 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('underscore');
 var mysql = require('mysql');
+var Promise = require('bluebird');
+io.emitAsync = Promise.promisify(io.emit);
 var util = require('./utilities');
 
 //Modifiable Settings
@@ -19,6 +21,7 @@ var loggedIn = {};
 /////////////////////////////////////////////
 //Database
 /////////////////////////////////////////////
+
 
 var db = mysql.createConnection({
   host: 'localhost',
@@ -34,6 +37,7 @@ db.connect(function(err) {
   }
   console.log('Successful Connection');
 })
+
 
 //
 // var db = openDatabase();
@@ -54,6 +58,7 @@ app.use(express.static(__dirname + '/../client'));
 
 //Controllers -> might need to move someplace els
 io.on('connection', function(socket) {
+
 
   //Signup Listener
   socket.on('signup', function(signupData) {
