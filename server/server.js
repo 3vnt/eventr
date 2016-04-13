@@ -110,10 +110,23 @@ io.on('connection', function(socket) {
   ////createEvent View
   socket.on('addEvent', function(data) {
     //Store data into database;
-    //tell everyone that is online of the change //broadcast to everyone (MVP!);
-      //use the people in the data
-      //find their usenames
-      //braodcast to the sockets with those username of instant changes
+    var event = {
+        created_at: util.mysqlDatetime(),
+        updated_at: util.mysqlDatetime(),
+        name: data.name,
+        date: '??',
+        location: data.location,
+        total_cost: data.cost,
+        event_host: '??',
+    };
+
+    db.query('INSERT INTO events SET ?', event, function(err, data) {
+      if (err) {
+        console.log('failing at server INSERT Call', err);
+        return;
+      };
+      util.eventBroadcast(io, db, data, loggedIn, data);
+    });
   });
 
 });
