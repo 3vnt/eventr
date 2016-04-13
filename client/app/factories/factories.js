@@ -11,7 +11,6 @@ angular.module('app.factories', [])
 })
 
 
-// SocketFactory
 // MySqlFactory
 
 
@@ -48,10 +47,6 @@ angular.module('app.factories', [])
       url: '/api/questions',
       data: question
     });
-  };
-  
-  var log_some_things = function() {
-    console.log('this for sure works');
   };
   
   // sends two options with a user
@@ -106,10 +101,6 @@ angular.module('app.factories', [])
 
   return {
     accept: accept
-  }
+  };
 
-})
-
-.factory()
-
-;
+});
