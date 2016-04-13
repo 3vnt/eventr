@@ -7,9 +7,9 @@ angular.module('app.pollResults', ['app.factories'])
 
   // TODO: get poll results from server.
   $scope.pollResults = 'poll results';
+
   $scope.showWarning = false;
   $scope.selectedEventAndDate = {};
-
 
   // Dummy data
   // $scope.dateChoices = [
@@ -35,8 +35,6 @@ angular.module('app.pollResults', ['app.factories'])
     // NOTE: check if values are not defined
     // TODO: Ensure values are date, time.
     if (finalChoices.event && finalChoices.date) {
-      // NOTE: currently just logs final choices
-      // TODO: should send final choices to server
       console.log(finalChoices);
       socket.emit('finalChoices', finalChoices);
       $scope.showWarning = false;
