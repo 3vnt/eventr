@@ -55,8 +55,12 @@ angular.module('app', [
       templateUrl: 'app/templates/signup.html',
       controller: 'SignupController'
     })
+    .when('/signup', {
+      templateUrl: 'app/templates/signup.html',
+      controller: 'SignupController'
+    })
     .otherwise({
-      redirectTo: '/login'
+      redirectTo: '/signup'
     });
 
     // Inject an interceptor to stop all outbound requests and look in local storage to find the user's token and then add it to the header so the server can validate the request

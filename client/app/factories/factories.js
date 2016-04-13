@@ -10,6 +10,7 @@ angular.module('app.factories', [])
   }
 })
 
+
 //Factory for using socket.io]
 .factory('socket', function ($rootScope) {
   var socket = io.connect();
@@ -43,10 +44,6 @@ angular.module('app.factories', [])
       url: '/api/questions',
       data: question
     });
-  };
-  
-  var log_some_things = function() {
-    console.log('this for sure works');
   };
   
   // sends two options with a user
@@ -120,4 +117,5 @@ angular.module('app.factories', [])
     isAuth: isAuth,
     logout: logout
   };
+
 });
