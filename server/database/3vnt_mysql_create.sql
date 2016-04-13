@@ -55,6 +55,7 @@ CREATE TABLE events (
 	created_at DATETIME NOT NULL,
 	updated_at DATETIME NOT NULL,
 	response_deadline DATE NOT NULL,
+	event_name varchar(100) NOT NULL,
 	total_cost float,
 	event_host int NOT NULL,
 	event_activity int,
