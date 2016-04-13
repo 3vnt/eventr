@@ -1,14 +1,14 @@
 /* to run this file, from the root directory of the project
 
-mysql -u root database < server/database/3vnt_mysql_create.sql 
+mysql -u root database < server/database/3vnt_mysql_create.sql
 
 ... include -p if you set a password
 */
 -- uncomment this line to reset the database
--- DROP DATABASE eventr;
+DROP DATABASE eventr;
 
 -- uncomment this line for first run
--- CREATE DATABASE eventr;
+CREATE DATABASE eventr;
 
 /*--------------------------------------------------------------------------------
 
@@ -57,28 +57,31 @@ CREATE TABLE events (
 	response_deadline DATE NOT NULL,
 	total_cost float,
 	event_host int NOT NULL,
-	event_activity varchar(100),
-	event_date DATE,
-	event_location varchar(200),
+	event_activity int,
+	event_date int,
+	event_location int,
 	PRIMARY KEY (id)
 );
 
 CREATE TABLE eventActivityOptions (
 	id int NOT NULL AUTO_INCREMENT,
 	event_activity varchar(100) NOT NULL,
-	event_id int NOT NULL
+	event_id int NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE eventDateOptions (
 	id int NOT NULL AUTO_INCREMENT,
 	event_date DATE NOT NULL,
-	event_id int NOT NULL
+	event_id int NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE eventLocationOptions (
 	id int NOT NULL AUTO_INCREMENT,
 	event_location varchar(200),
-	event_id int NOT NULL
+	event_id int NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE users_choices (
@@ -141,11 +144,11 @@ ALTER TABLE events          			ADD CONSTRAINT events_fk1           			FOREIGN KE
 ALTER TABLE events          			ADD CONSTRAINT events_fk2           			FOREIGN KEY (event_date)  		REFERENCES eventDateOptions(id);
 ALTER TABLE events          			ADD CONSTRAINT events_fk3           			FOREIGN KEY (event_location)  REFERENCES eventLocationOptions(id);
 
-ALTER TABLE eventActivityOptions	ADD CONSTRAINT eventActivityOptions_fk0		FOREIGN KEY (event_id) 				REFERENCES event(id);
+ALTER TABLE eventActivityOptions	ADD CONSTRAINT eventActivityOptions_fk0		FOREIGN KEY (event_id) 				REFERENCES events(id);
 
-ALTER TABLE eventLocationOptions	ADD CONSTRAINT eventLocationOptions_fk0		FOREIGN KEY (event_id) 				REFERENCES event(id);
+ALTER TABLE eventLocationOptions	ADD CONSTRAINT eventLocationOptions_fk0		FOREIGN KEY (event_id) 				REFERENCES events(id);
 
-ALTER TABLE eventDateOptions			ADD CONSTRAINT eventDateOptions_fk0				FOREIGN KEY (event_id) 				REFERENCES event(id);
+ALTER TABLE eventDateOptions			ADD CONSTRAINT eventDateOptions_fk0				FOREIGN KEY (event_id) 				REFERENCES events(id);
 
 ALTER TABLE users_choices   			ADD CONSTRAINT users_choices_fk0    			FOREIGN KEY (user_id)     		REFERENCES users(id);
 ALTER TABLE users_choices   			ADD CONSTRAINT users_choices_fk1    			FOREIGN KEY (choices_id)  		REFERENCES choices(id);
