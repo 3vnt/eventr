@@ -1,6 +1,6 @@
 angular.module('app.finalAccept', ['app.factories'])
 
-.controller('FinalAcceptController', function($scope, socket, $location) {
+.controller('FinalAcceptController', function($scope, $location, socket) {
   $scope.confirmed = false;
 
   $scope.confirmParticipant = function() {

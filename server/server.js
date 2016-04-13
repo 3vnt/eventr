@@ -21,9 +21,9 @@ var loggedIn = {};
 /////////////////////////////////////////////
 
 var db = mysql.createConnection({
-  host: "localhost",
+  host: 'localhost',
   user: 'root',
-  database: "eventr",
+  database: 'eventr',
 });
 
 //Testing

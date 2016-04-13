@@ -1,6 +1,6 @@
 angular.module('app.signup', ['app.factories'])
 
-.controller('SignupController', function($scope, socket, $location) {
+.controller('SignupController', function($scope, $location, socket) {
 
   $scope.message ='';
 
