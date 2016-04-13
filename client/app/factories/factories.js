@@ -81,9 +81,43 @@ angular.module('app.factories', [])
 })
 
 
-.factory('AuthFactory', function($http, $location, $window) {
-  // Trade username/password for a JWT from the server and store that JWT in localstorage.
-  var login = function(user) {
-    return 
+.factory('ConfirmedLobby', function($http) {
+
+  var lobby = function() {
+    return $http({
+      method: 'GET',
+      url: '/api/confirmedlobby'
+    })
   }
+})
+
+.factory('FinalAccept', function($http) {
+  var accept = function() {
+    return $http({
+      method: 'GET',
+      url: '/api/accept'
+    })
+  }
+
+  return {
+    accept: accept
+  }
+
+})
+
+.factory('AuthFactory', function($http, $location, $window) {
+
+  var isAuth = function() {
+    return !!$window.localStorage.getItem('com.eventr');
+  };
+
+  var logout = function() {
+    $window.localStorage.removeItem('com.eventr');
+    $location.path('/login');
+  };
+
+  return {
+    isAuth: isAuth,
+    logout: logout
+  };
 });

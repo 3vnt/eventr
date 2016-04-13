@@ -1,6 +1,7 @@
 angular.module('app', [
   'ngRoute',
   'app.login',
+  'app.signup',
   'app.start',
   'app.createEvent',
   'app.pollResults',
@@ -50,6 +51,10 @@ angular.module('app', [
       templateUrl: 'app/templates/logout.html',
       controller: 'AuthController'
     })
+    .when('/signup', {
+      templateUrl: 'app/templates/signup.html',
+      controller: 'SignupController'
+    })
     .otherwise({
       redirectTo: '/login'
     });
@@ -70,14 +75,14 @@ angular.module('app', [
   };
   return attachToken;
 })
-.run(function($rootScope, $location, Auth) {
+.run(function($rootScope, $location, AuthFactory) {
   // listen for anytime angular tries to change routes. When it tries, we look for the token in localstorage and send that token to the server to see if it's valid.
   $rootScope.$on('$routeChangeStart', function(event, next, current) {
     if (next.$$route.originalPath === '/logout') {
-      Auth.logout();
+      AuthFactory.logout();
     }
 
-    if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
+    if (next.$$route && next.$$route.authenticate && !AuthFactory.isAuth()) {
       $location.path('/login');
     }
   });

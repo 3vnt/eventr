@@ -7,6 +7,8 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('underscore');
 var mysql = require('mysql');
+var Promise = require('bluebird');
+io.emitAsync = Promise.promisify(io.emit);
 
 
 //Modifiable Settings
@@ -21,11 +23,28 @@ var loggedIn = {};
 //Database
 /////////////////////////////////////////////
 
-var connection = mysql.createConnection({
-  host: "???",
-  user: "???",
-  password: "???",
+// can be used with `Gulp start` 
+// var connection = mysql.createConnection(process.env.MYSQL);
+var db = mysql.createConnection({
+  host: "localhost",
+  user: 'root',
+  database: "eventr",
 });
+
+db.connect(function(err) {
+  if (err) {
+    console.log('Connection Error:  ', err);
+    return;
+  }
+  console.log('Successful Connection');
+})
+
+
+//
+// var db = openDatabase();
+// db.transaction(function(tx) {
+//   tx.executeSql('')
+// })
 
 //////////////////////////////////////////////
 ///Express Controllers
@@ -41,8 +60,20 @@ app.use(express.static(__dirname + '/../client'));
 //Controllers -> might need to move someplace els
 io.on('connection', function(socket) {
 
+  socket.on('signup', function(singupData) {
+    //check if email already in use
+
+    //check if userID is unique
+    // else {
+    //   //Store thing into database
+    //   socket.emit('success', /*...*/);
+    // }
+  })
+
   socket.on('login', function(loginData) {
     //save into socket loggedIn user array
+    console.log("socket object", socket);
+    console.log("ID", socket.id);
     loggedIn[loginData.email] = socket.id;
     //do something to save stuff onto database;
   });

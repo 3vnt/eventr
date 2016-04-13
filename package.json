@@ -27,7 +27,12 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "nodemon": "^1.9.1",
-    "eslint-config-hackreactor": "git://github.com/hackreactor-labs/eslint-config-hackreactor"
+    "bower": "^1.7.7",
+    "browser-sync": "^2.12.1",
+    "eslint-config-hackreactor": "git://github.com/hackreactor-labs/eslint-config-hackreactor",
+    "grunt": "^1.0.1",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-util": "^3.0.7",
+    "nodemon": "^1.9.1"
   }
 }
