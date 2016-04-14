@@ -10,7 +10,7 @@ angular.module('app.auth', ['app.factories'])
   // BEGIN all authentication-related event listeners 
   socket.on('loginSuccess', function(token) {
     $scope.loginMessage = 'Please login.'; //reset default auth message upon successful login.
-    $window.localStorage.setItem('com.eventr', token);
+    $window.localStorage.setItem('com.eventr', token); 
     $location.path('/start');
   });
 
@@ -27,15 +27,21 @@ angular.module('app.auth', ['app.factories'])
 
   socket.on('signupSuccess', function(token) {
     $scope.signupMessage = 'Please signup.';
-    $window.localStorage.setItem('com.eventr', token);
+    $window.localStorage.setItem('com.eventr', token); //add a token with key and value
     $location.path('/start');
   });
 
-  socket.on('signupUserExists', function(token) {
+  socket.on('signupUserExists', function() {
     $scope.loginMessage = 'User already exists. Please login.';
     $scope.signupMessage = 'Please signup.';
     $location.path('/login');
   });
+
+  socket.on('logoutSuccess', function() {
+    $window.localStorage.removeItem('com.eventr');
+    $location.path('/login');
+  });
+
   // END all authentication-related event listeners 
 
   $scope.login = function() {
@@ -77,6 +83,11 @@ angular.module('app.auth', ['app.factories'])
     //   .catch(function(error) {
     //     console.error(error);
     //   });
+  };
+
+  $scope.logout = function() {
+    console.log('logging out');
+    socket.emit('logout');
   };
 
 });

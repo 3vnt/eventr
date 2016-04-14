@@ -9,9 +9,16 @@
   <body>
     <h1>EVENTR</h1>
 
-    <ul>
-        <li ng-controller="AuthController"><a ng-click="logoutUser()">LOGOUT</a></li>
-    </ul>
+
+    <div ng-controller="AuthController">
+        <button ng-click="logout()">Logout</button>
+    </div>
+
+<!--     <ul>
+        <li ng-controller="AuthController"><a ng-click="logout()">Logout</a></li>
+        <li><a href="#/logout">Logout</a></li>
+
+    </ul> -->
 
     <!-- User Profile: -->
     <nav class="usernav">User Navigation</nav>
@@ -36,8 +43,8 @@
     <script src="lib/angular-route/angular-route.js"></script>
 
     <script src="app/app.js"></script>
-    <script src="app/factories/factories.js"></script>
     <script src="app/controllers/auth.js"></script>
+    <script src="app/factories/factories.js"></script>
     <script src="app/controllers/start.js"></script>
     <script src="app/controllers/createevent.js"></script>
     <script src="app/controllers/pollresults.js"></script>
