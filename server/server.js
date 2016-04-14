@@ -13,40 +13,27 @@ var util = require('./utilities');
 var port = 8080;
 
 //Temp Authentication ///////////////////////
-
 var loggedIn = {};
 
 /////////////////////////////////////////////
 //Database
 /////////////////////////////////////////////
+var db;
 
-var db = mysql.createConnection({
+mysql.createConnection({
   host: 'localhost',
   user: 'root',
   database: 'eventr',
+}).then(function(database){
+  db = database;
+  console.log('successful connection');
 });
-
-//Testing
-db.connect(function(err) {
-  if (err) {
-    console.log('Connection Error:  ', err);
-    return;
-  }
-  console.log('Successful Connection');
-})
-
-//
-// var db = openDatabase();
-// db.transaction(function(tx) {
-//   tx.executeSql('')
-// })
 
 //////////////////////////////////////////////
 ///Express Controllers
 //////////////////////////////////////////////
 
 app.use(express.static(__dirname + '/../client'));
-
 
 //////////////////////////////////////////////
 ///Socket Controllers
@@ -63,12 +50,8 @@ io.on('connection', function(socket) {
       password: signupData.password,
       created_at: util.mysqlDatetime(),   //need to be reformatted -> currently hardcoded
     };
-    db.query("INSERT INTO users SET ?" , newUser, function(err, result) {
-        if (err) {
-          console.log(err);
-          socket.emit('failed');
-          return;
-        };
+    db.query("INSERT INTO users SET ?" , newUser)
+      .then(function() {
         loggedIn[signupData.email] = socket.id;
         socket.emit('success');
     });
@@ -78,23 +61,16 @@ io.on('connection', function(socket) {
   //Login Listener
   socket.on('login', function(loginData) {
     //save into socket loggedIn user array
-
-    db.query('SELECT password FROM users WHERE email = ?', loginData.email, function(err, data) {
-      if (err) {
+    db.query('SELECT password FROM users WHERE email = ?', loginData.email)
+      .then(function(data){
+        if (data[0].password === loginData.password) {
+          loggedIn[loginData.email] = socket.id;
+          socket.emit('authenticated', {});
+        };
+      }).catch(function(err) {
         console.log(err);
-        socket.emit('noUser');
-        return;
-      }
-      console.log(data[0]);
-      if (data[0].password === loginData.password) {
-        loggedIn[loginData.email] = socket.id;
-        socket.emit('authenticated', {});
-        return;
-      }
-      socket.emit('invalidPassword');
+        socket.emit('noUser')
     });
-
-    //do something to save stuff onto database;
   });
 
   //Logout Listener
@@ -131,7 +107,8 @@ io.on('connection', function(socket) {
     });
   });
 
-  util.eventBroadcast(io, db, event, loggedIn, data);
+  //util.eventBroadcast(io, db, event, loggedIn, data);
+
 });
 
 
