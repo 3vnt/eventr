@@ -1,7 +1,5 @@
 angular.module('app', [
   'ngRoute',
-  'app.login',
-  'app.signup',
   'app.start',
   'app.createEvent',
   'app.pollResults',
@@ -9,7 +7,6 @@ angular.module('app', [
   'app.finalAccept',
   'app.confirmedLobby',
   'app.auth',
-  'app.logout',
   'app.factories'
   ])
 .config(function($routeProvider, $httpProvider) {
@@ -53,11 +50,7 @@ angular.module('app', [
     })
     .when('/signup', {
       templateUrl: 'app/templates/signup.html',
-      controller: 'SignupController'
-    })
-    .when('/signup', {
-      templateUrl: 'app/templates/signup.html',
-      controller: 'SignupController'
+      controller: 'AuthController'
     })
     .otherwise({
       redirectTo: '/signup'

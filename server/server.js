@@ -6,7 +6,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('underscore');
-var mysql = require('mysql');
+var mysql = require('promise-mysql');
 var Promise = require('bluebird');
 io.emitAsync = Promise.promisify(io.emit);
 var util = require('./utilities');
@@ -15,35 +15,21 @@ var util = require('./utilities');
 var port = 8080;
 
 //Temp Authentication ///////////////////////
-
 var loggedIn = {};
 
 /////////////////////////////////////////////
 //Database
 /////////////////////////////////////////////
+var db;
 
-
-var db = mysql.createConnection({
+mysql.createConnection({
   host: 'localhost',
   user: 'root',
   database: 'eventr',
+}).then(function(database){
+  db = database;
+  console.log('successful connection');
 });
-
-//Testing
-db.connect(function(err) {
-  if (err) {
-    console.log('Connection Error:  ', err);
-    return;
-  }
-  console.log('Successful Connection');
-})
-
-
-//
-// var db = openDatabase();
-// db.transaction(function(tx) {
-//   tx.executeSql('')
-// })
 
 //////////////////////////////////////////////
 ///Express Controllers
@@ -51,14 +37,12 @@ db.connect(function(err) {
 
 app.use(express.static(__dirname + '/../client'));
 
-
 //////////////////////////////////////////////
 ///Socket Controllers
 //////////////////////////////////////////////
 
 //Controllers -> might need to move someplace els
 io.on('connection', function(socket) {
-
 
   //Signup Listener
   socket.on('signup', function(signupData) {
@@ -68,38 +52,37 @@ io.on('connection', function(socket) {
       password: signupData.password,
       created_at: util.mysqlDatetime(),   //need to be reformatted -> currently hardcoded
     };
-    db.query("INSERT INTO users SET ?" , newUser, function(err, result) {
-        if (err) {
-          console.log(err);
-          socket.emit('failed');
-          return;
-        };
+    db.query("INSERT INTO users SET ?" , newUser)
+      .then(function(data) {
         loggedIn[signupData.email] = socket.id;
-        socket.emit('success');
-    });
+        socket.emit('signupSuccess');
+      })
+      .catch(function(error) {
+        console.error(error);
+        if (error.errno === 1062) {
+          socket.emit('signupUserExists');
+        }
+        //ADD OTHER ERROR SCENARIOS HERE!
+      });
   });
 
 
   //Login Listener
   socket.on('login', function(loginData) {
     //save into socket loggedIn user array
-
-    db.query('SELECT password FROM users WHERE email = ?', loginData.email, function(err, data) {
-      if (err) {
-        console.log(err);
-        socket.emit('noUser');
-        return;
-      }
-      console.log(data[0]);
-      if (data[0].password === loginData.password) {
-        loggedIn[loginData.email] = socket.id;
-        socket.emit('authenticated', {});
-        return;
-      }
-      socket.emit('invalidPassword');
-    });
-
-    //do something to save stuff onto database;
+    db.query('SELECT password FROM users WHERE email = ?', loginData.email)
+      .then(function(data){
+        if (data[0].password === loginData.password) {
+          loggedIn[loginData.email] = socket.id;
+          socket.emit('loginSuccess', {});
+        } else {
+          socket.emit('loginWrongPassword');
+        }
+      })
+      .catch(function(error) {
+        console.error(error);
+        socket.emit('loginUserDoesNotExist');
+      });
   });
 
   //Logout Listener
@@ -115,14 +98,16 @@ io.on('connection', function(socket) {
   ////createEvent View
   socket.on('addEvent', function(data) {
     //Store data into database;
+
+    var userEmail = util.findEmail(socket.id, loggedIn);
+
     var event = {
         created_at: util.mysqlDatetime(),
         updated_at: util.mysqlDatetime(),
-        name: data.name,
-        date: '??',
-        location: data.location,
+        event_name: data.name,
+        response_deadline: data.response_deadline,
         total_cost: data.cost,
-        event_host: '??',
+        event_host: util.findUser(db, userEmail),
     };
 
     db.query('INSERT INTO events SET ?', event, function(err, data) {
@@ -130,9 +115,11 @@ io.on('connection', function(socket) {
         console.log('failing at server INSERT Call', err);
         return;
       };
-      util.eventBroadcast(io, db, data, loggedIn, data);
+
     });
   });
+
+  //util.eventBroadcast(io, db, event, loggedIn, data);
 
 });
 

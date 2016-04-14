@@ -33,6 +33,9 @@ angular.module('app.factories', [])
           });
         });
       }
+      // emitAsync: function() {
+      //   return Promise.promisify(socket.emit);
+      // }
     };
 })
 
