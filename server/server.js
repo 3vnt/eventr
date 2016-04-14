@@ -6,7 +6,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('underscore');
-var mysql = require('mysql');
+var mysql = require('promise-mysql');
 var util = require('./utilities');
 
 //Modifiable Settings
@@ -127,10 +127,11 @@ io.on('connection', function(socket) {
         console.log('failing at server INSERT Call', err);
         return;
       };
-      util.eventBroadcast(io, db, data, loggedIn, data);
+
     });
   });
 
+  util.eventBroadcast(io, db, event, loggedIn, data);
 });
 
 
