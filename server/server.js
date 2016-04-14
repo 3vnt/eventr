@@ -6,7 +6,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('underscore');
-var mysql = require('mysql');
+var mysql = require('promise-mysql');
 var util = require('./utilities');
 
 //Modifiable Settings
@@ -110,14 +110,16 @@ io.on('connection', function(socket) {
   ////createEvent View
   socket.on('addEvent', function(data) {
     //Store data into database;
+
+    var userEmail = util.findEmail(socket.id, loggedIn);
+
     var event = {
         created_at: util.mysqlDatetime(),
         updated_at: util.mysqlDatetime(),
-        name: data.name,
-        date: '??',
-        location: data.location,
+        event_name: data.name,
+        response_deadline: data.response_deadline,
         total_cost: data.cost,
-        event_host: '??',
+        event_host: util.findUser(db, userEmail),
     };
 
     db.query('INSERT INTO events SET ?', event, function(err, data) {
@@ -125,10 +127,11 @@ io.on('connection', function(socket) {
         console.log('failing at server INSERT Call', err);
         return;
       };
-      util.eventBroadcast(io, db, data, loggedIn, data);
+
     });
   });
 
+  util.eventBroadcast(io, db, event, loggedIn, data);
 });
 
 
