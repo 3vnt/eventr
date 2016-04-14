@@ -7,6 +7,8 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('underscore');
 var mysql = require('promise-mysql');
+var Promise = require('bluebird');
+io.emitAsync = Promise.promisify(io.emit);
 var util = require('./utilities');
 
 //Modifiable Settings
@@ -51,10 +53,17 @@ io.on('connection', function(socket) {
       created_at: util.mysqlDatetime(),   //need to be reformatted -> currently hardcoded
     };
     db.query("INSERT INTO users SET ?" , newUser)
-      .then(function() {
+      .then(function(data) {
         loggedIn[signupData.email] = socket.id;
-        socket.emit('success');
-    });
+        socket.emit('signupSuccess');
+      })
+      .catch(function(error) {
+        console.error(error);
+        if (error.errno === 1062) {
+          socket.emit('signupUserExists');
+        }
+        //ADD OTHER ERROR SCENARIOS HERE!
+      });
   });
 
 
@@ -65,12 +74,15 @@ io.on('connection', function(socket) {
       .then(function(data){
         if (data[0].password === loginData.password) {
           loggedIn[loginData.email] = socket.id;
-          socket.emit('authenticated', {});
-        };
-      }).catch(function(err) {
-        console.log(err);
-        socket.emit('noUser')
-    });
+          socket.emit('loginSuccess', {});
+        } else {
+          socket.emit('loginWrongPassword');
+        }
+      })
+      .catch(function(error) {
+        console.error(error);
+        socket.emit('loginUserDoesNotExist');
+      });
   });
 
   //Logout Listener

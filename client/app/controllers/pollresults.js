@@ -7,7 +7,6 @@ angular.module('app.pollResults', ['app.factories'])
 
   // TODO: get poll results from server.
   $scope.pollResults = 'poll results';
-
   $scope.showWarning = false;
   $scope.selectedEventAndDate = {};
 

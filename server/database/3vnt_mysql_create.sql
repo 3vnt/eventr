@@ -1,7 +1,5 @@
 /* to run this file, from the root directory of the project
-
 mysql -u root < server/database/3vnt_mysql_create.sql
-
 ... include -p if you set a password
 */
 
@@ -14,19 +12,14 @@ CREATE DATABASE eventr;
 /*--------------------------------------------------------------------------------
 before running this file, you can reset your root password by taking the following
   steps (if you forgot your root password)
-
 1. Start mysql without authenticating:
    > mysqld --skip-grant-tables
-
 2. in the mysql prompt, update the user to have the password 'a'
   > update user set password=PASSWORD("a") where User='root';
-
 3. quit
   > \q
-
 4. stop mysql
   > mysqld stop
-
 5. start mysql again and login
   > mysqld start
   > mysql -u root -p

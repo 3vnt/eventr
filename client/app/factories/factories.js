@@ -11,9 +11,6 @@ angular.module('app.factories', [])
 })
 
 
-// MySqlFactory
-
-
 //Factory for using socket.io]
 .factory('socket', function ($rootScope) {
   var socket = io.connect();
@@ -36,6 +33,9 @@ angular.module('app.factories', [])
           });
         });
       }
+      // emitAsync: function() {
+      //   return Promise.promisify(socket.emit);
+      // }
     };
 })
 
@@ -101,6 +101,24 @@ angular.module('app.factories', [])
 
   return {
     accept: accept
+  }
+
+})
+
+.factory('AuthFactory', function($http, $location, $window) {
+
+  var isAuth = function() {
+    return !!$window.localStorage.getItem('com.eventr');
+  };
+
+  var logout = function() {
+    $window.localStorage.removeItem('com.eventr');
+    $location.path('/login');
+  };
+
+  return {
+    isAuth: isAuth,
+    logout: logout
   };
 
 });
