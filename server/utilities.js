@@ -6,12 +6,27 @@ var _ = require('underscore');
 /////////////////////////////////////////////
 //Socket helper functions
 /////////////////////////////////////////////
-
-
-exports.findUser = function(db, socketID, loggedIn) {
-
+exports.findEmail = function(socketId, loggedIn) {
+  _.each(loggedIn, function(email) {
+    if(loggedIn[email] === socketID) {
+      return email;
+    };
+  });
 };
 
+exports.findUser = function(db, email) {
+
+  db.query('SELECT id FROM users WHERE email = ?', email, function(err, _ID) {
+    if (err) {
+      console.log('Failed at: select id from users where email ')
+      return;
+    };
+    return _ID;
+  });
+};
+
+
+//use table joining
 exports.eventBroadcast = function(io, db, event, loggedIn, data) {
   //DB query events - find event ID
   db.query('SELECT id FROM events WHERE name = ?', event, function(err, eventID) {
