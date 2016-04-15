@@ -54,7 +54,7 @@ io.on('connection', function(socket) {
       created_at: util.mysqlDatetime(),   //need to be reformatted -> currently hardcoded
     };
     db.query("INSERT INTO users SET ?" , newUser)
-      .then(function(packet) {
+      .then(function(data) {
         // Let's encode with the email for now. Encode with the user object if have time.
         var token = jwt.encode(newUser.email, 'secret');
 
@@ -75,7 +75,7 @@ io.on('connection', function(socket) {
   socket.on('login', function(loginData) {
     //save into socket loggedIn user array
     db.query('SELECT password FROM users WHERE email = ?', loginData.email)
-      .then(function(packet){
+      .then(function(data){
         if (data[0].password === loginData.password) {
           // Let's encode with the email for now. Encode with the user object if have time.
           var token = jwt.encode(loginData.email, 'secret');
@@ -105,6 +105,26 @@ io.on('connection', function(socket) {
     }
   });
 
+  //Check Auth Listener
+  socket.on('checkAuth', function(token) {
+    if (!token) {
+      socket.emit('tokenFailed');
+    } else {
+      var userEmail = jwt.decode(token, 'secret');
+
+      db.query('SELECT email FROM users WHERE email = ?', userEmail)
+        .then(function(data) {
+          if (data[0].email === userEmail) {
+            //token confirmed so send back response to client
+            socket.emit('tokenConfirmed');
+          } 
+        })
+        .catch(function(error) {
+          console.error(error);
+          socket.emit('tokenFailed');
+        })
+    }
+  });
 
   ////createEvent View
   socket.on('addEvent', function(data) {

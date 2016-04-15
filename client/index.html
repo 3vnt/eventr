@@ -9,12 +9,15 @@
   <body>
     <h1>EVENTR</h1>
 
-    <div ng-controller="AuthController">
-        <button ng-click="logout()">Logout</button>
-    </div>
 
     <!-- User Profile: -->
-    <nav class="usernav">User Navigation</nav>
+    <nav class="usernav">
+        <li>
+            <ul ng-controller="AuthController">
+                <button ng-click="logout()">Logout</button>
+            </ul>   
+        </li>
+    </nav>
 
     <!-- Notification Bar: -->
     <div class="notifications">Notifications</div>

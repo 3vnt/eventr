@@ -50,19 +50,6 @@ angular.module('app.auth', ['app.factories'])
       password: $scope.login.password
     };
     socket.emit('login', loginData);
-
-    // Don't delete yet...
-    // socket.emitAsync('login', user);
-    //   .then(function(token) {
-    //     console.log(token); //format might be wrong... maybe try response.data.token instead
-    //     //user should store a local token upon a successful login.
-    //     $window.localStorage.setItem('com.eventr', token);
-    //     $location.path('/start');
-
-    //   })
-    //   .catch(function(error) {
-    //     console.error(error);
-    //   });
   };
 
   $scope.signup = function() {
@@ -72,19 +59,6 @@ angular.module('app.auth', ['app.factories'])
       password: $scope.signup.password
     };
     socket.emit('signup', signupData);
-
-    // Don't delete yet...
-    // socket.emitAsync('signup', signupData)
-    //   .then(function(token) {
-    //     console.log(token); //format might be wrong... maybe try response.data.token instead
-    //     //user should store a local token upon a successful signup.
-    //     $window.localStorage.setItem('com.eventr', token);
-    //     $location.path('/createevent');
-
-    //   })
-    //   .catch(function(error) {
-    //     console.error(error);
-    //   });
   };
 
   $scope.logout = function() {
