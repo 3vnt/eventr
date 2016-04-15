@@ -65,6 +65,7 @@ angular.module('app', [
     $httpProvider.interceptors.push('TokensFactory');
 })
 .factory('TokensFactory', function($window) {
+  // May not need this part if not using $http GET or POST requests
   var attachToken = {
     request: function(object) {
       var jwt = $window.localStorage.getItem('com.eventr');

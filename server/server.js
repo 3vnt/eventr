@@ -77,7 +77,7 @@ io.on('connection', function(socket) {
     db.query('SELECT password FROM users WHERE email = ?', loginData.email)
       .then(function(data){
         if (data[0].password === loginData.password) {
-          // Let's encode with the email for now. Encode with the user object if have time.
+          // Let's encode with the email for now. Encode with the entire user object if have time.
           var token = jwt.encode(loginData.email, 'secret');
 
           loggedIn[loginData.email] = socket.id;
@@ -105,7 +105,7 @@ io.on('connection', function(socket) {
     }
   });
 
-  //Check Auth Listener
+  //Check Auth Listener -- DOESNT WORK RIGHT NOW
   socket.on('checkAuth', function(token) {
     if (!token) {
       socket.emit('tokenFailed');

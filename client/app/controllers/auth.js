@@ -32,7 +32,7 @@ angular.module('app.auth', ['app.factories'])
   });
 
   socket.on('signupUserExists', function() {
-    $scope.loginMessage = 'User already exists. Please login.';
+    $scope.loginMessage = 'User already exists. Please login.'; //this is not rendering fix this
     $scope.signupMessage = 'Please signup.';
     $location.path('/login');
   });
@@ -41,9 +41,10 @@ angular.module('app.auth', ['app.factories'])
     $window.localStorage.removeItem('com.eventr');
     $location.path('/login');
   });
-
   // END all authentication-related event listeners ------------------------------------
 
+
+  // START all authentication-related outbound emits -----------------------------------
   $scope.login = function() {
     var loginData = {
       email: $scope.login.email,
@@ -56,7 +57,6 @@ angular.module('app.auth', ['app.factories'])
     var signupData = {
       username: $scope.signup.name,
       email: $scope.signup.email,
-      password: $scope.signup.password
     };
     socket.emit('signup', signupData);
   };
@@ -64,5 +64,7 @@ angular.module('app.auth', ['app.factories'])
   $scope.logout = function() {
     socket.emit('logout');
   };
+  // END all authentication-related outbound emits ------------------------------------
+
 
 });
