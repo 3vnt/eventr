@@ -94,7 +94,6 @@ io.on('connection', function(socket) {
 
   //Logout Listener
   socket.on('logout', function() {
-    console.log('entered');
     // Delete token from client
     socket.emit('logoutSuccess');
 

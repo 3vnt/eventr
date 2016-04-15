@@ -7,7 +7,7 @@ angular.module('app.auth', ['app.factories'])
   $scope.loginMessage = 'Please login.';
   $scope.signupMessage = 'Please signup.';
 
-  // BEGIN all authentication-related event listeners 
+  // BEGIN all authentication-related event listeners ------------------------------------
   socket.on('loginSuccess', function(token) {
     $scope.loginMessage = 'Please login.'; //reset default auth message upon successful login.
     $window.localStorage.setItem('com.eventr', token); 
@@ -42,7 +42,7 @@ angular.module('app.auth', ['app.factories'])
     $location.path('/login');
   });
 
-  // END all authentication-related event listeners 
+  // END all authentication-related event listeners ------------------------------------
 
   $scope.login = function() {
     var loginData = {
@@ -51,6 +51,7 @@ angular.module('app.auth', ['app.factories'])
     };
     socket.emit('login', loginData);
 
+    // Don't delete yet...
     // socket.emitAsync('login', user);
     //   .then(function(token) {
     //     console.log(token); //format might be wrong... maybe try response.data.token instead
@@ -72,6 +73,7 @@ angular.module('app.auth', ['app.factories'])
     };
     socket.emit('signup', signupData);
 
+    // Don't delete yet...
     // socket.emitAsync('signup', signupData)
     //   .then(function(token) {
     //     console.log(token); //format might be wrong... maybe try response.data.token instead
@@ -86,7 +88,6 @@ angular.module('app.auth', ['app.factories'])
   };
 
   $scope.logout = function() {
-    console.log('logging out');
     socket.emit('logout');
   };
 
