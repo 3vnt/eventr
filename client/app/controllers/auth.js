@@ -7,10 +7,10 @@ angular.module('app.auth', ['app.factories'])
   $scope.loginMessage = 'Please login.';
   $scope.signupMessage = 'Please signup.';
 
-  // BEGIN all authentication-related event listeners 
+  // BEGIN all authentication-related event listeners ------------------------------------
   socket.on('loginSuccess', function(token) {
     $scope.loginMessage = 'Please login.'; //reset default auth message upon successful login.
-    $window.localStorage.setItem('com.eventr', token);
+    $window.localStorage.setItem('com.eventr', token); 
     $location.path('/start');
   });
 
@@ -27,56 +27,44 @@ angular.module('app.auth', ['app.factories'])
 
   socket.on('signupSuccess', function(token) {
     $scope.signupMessage = 'Please signup.';
-    $window.localStorage.setItem('com.eventr', token);
+    $window.localStorage.setItem('com.eventr', token); //add a token with key and value
     $location.path('/start');
   });
 
-  socket.on('signupUserExists', function(token) {
-    $scope.loginMessage = 'User already exists. Please login.';
+  socket.on('signupUserExists', function() {
+    $scope.loginMessage = 'User already exists. Please login.'; //this is not rendering fix this
     $scope.signupMessage = 'Please signup.';
     $location.path('/login');
   });
-  // END all authentication-related event listeners 
 
+  socket.on('logoutSuccess', function() {
+    $window.localStorage.removeItem('com.eventr');
+    $location.path('/login');
+  });
+  // END all authentication-related event listeners ------------------------------------
+
+
+  // START all authentication-related outbound emits -----------------------------------
   $scope.login = function() {
     var loginData = {
       email: $scope.login.email,
       password: $scope.login.password
     };
     socket.emit('login', loginData);
-
-    // socket.emitAsync('login', user);
-    //   .then(function(token) {
-    //     console.log(token); //format might be wrong... maybe try response.data.token instead
-    //     //user should store a local token upon a successful login.
-    //     $window.localStorage.setItem('com.eventr', token);
-    //     $location.path('/start');
-
-    //   })
-    //   .catch(function(error) {
-    //     console.error(error);
-    //   });
   };
 
   $scope.signup = function() {
     var signupData = {
       username: $scope.signup.name,
       email: $scope.signup.email,
-      password: $scope.signup.password
     };
     socket.emit('signup', signupData);
-
-    // socket.emitAsync('signup', signupData)
-    //   .then(function(token) {
-    //     console.log(token); //format might be wrong... maybe try response.data.token instead
-    //     //user should store a local token upon a successful signup.
-    //     $window.localStorage.setItem('com.eventr', token);
-    //     $location.path('/createevent');
-
-    //   })
-    //   .catch(function(error) {
-    //     console.error(error);
-    //   });
   };
+
+  $scope.logout = function() {
+    socket.emit('logout');
+  };
+  // END all authentication-related outbound emits ------------------------------------
+
 
 });

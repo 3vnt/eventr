@@ -12,7 +12,7 @@ angular.module('app', [
 .config(function($routeProvider, $httpProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'app/templates/login.html',
+      templateUrl: 'app/templates/login.html', //make this go somewhere else if have time.
       controller: 'AuthController'
     })
     .when('/start', {
@@ -22,23 +22,28 @@ angular.module('app', [
     })
     .when('/createevent', {
       templateUrl: 'app/templates/createevent.html',
-      controller: 'CreateEventController'
+      controller: 'CreateEventController',
+      authenticate: true
     })
     .when('/pollresults', {
       templateUrl: 'app/templates/pollresults.html',
-      controller: 'PollResultsController'
+      controller: 'PollResultsController',
+      authenticate: true
     })
     .when('/preferencevote', {
       templateUrl: 'app/templates/preferencevote.html',
-      controller: 'PreferenceVoteController'
+      controller: 'PreferenceVoteController',
+      authenticate: true
     })
     .when('/finalaccept', {
       templateUrl: 'app/templates/finalaccept.html',
-      controller: 'FinalAcceptController'
+      controller: 'FinalAcceptController',
+      authenticate: true
     })
     .when('/confirmedlobby', {
       templateUrl: 'app/templates/confirmedlobby.html',
-      controller: 'ConfirmedLobbyController'
+      controller: 'ConfirmedLobbyController',
+      authenticate: true
     })
     .when('/login', {
       templateUrl: 'app/templates/login.html',
@@ -60,6 +65,7 @@ angular.module('app', [
     $httpProvider.interceptors.push('TokensFactory');
 })
 .factory('TokensFactory', function($window) {
+  // May not need this part if not using $http GET or POST requests
   var attachToken = {
     request: function(object) {
       var jwt = $window.localStorage.getItem('com.eventr');
@@ -75,9 +81,11 @@ angular.module('app', [
 .run(function($rootScope, $location, AuthFactory) {
   // listen for anytime angular tries to change routes. When it tries, we look for the token in localstorage and send that token to the server to see if it's valid.
   $rootScope.$on('$routeChangeStart', function(event, next, current) {
-    if (next.$$route.originalPath === '/logout') {
-      AuthFactory.logout();
-    }
+
+    // AuthFactory.checkAuth();
+    // if (next.$$route && next.$$route.authenticate && !AuthFactory.getAuth()) {
+    //   $location.path('/login');
+    // }
 
     if (next.$$route && next.$$route.authenticate && !AuthFactory.isAuth()) {
       $location.path('/login');

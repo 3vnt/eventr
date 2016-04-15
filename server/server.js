@@ -7,9 +7,10 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var _ = require('underscore');
 var mysql = require('promise-mysql');
-var Promise = require('bluebird');
-io.emitAsync = Promise.promisify(io.emit);
+// var Promise = require('bluebird'); // unused for now, might used later on
+// io.emitAsync = Promise.promisify(io.emit); // unused for now, might used later on
 var util = require('./utilities');
+var jwt = require('jwt-simple');
 
 //Modifiable Settings
 var port = 8080;
@@ -54,8 +55,11 @@ io.on('connection', function(socket) {
     };
     db.query("INSERT INTO users SET ?" , newUser)
       .then(function(data) {
+        // Let's encode with the email for now. Encode with the user object if have time.
+        var token = jwt.encode(newUser.email, 'secret');
+
         loggedIn[signupData.email] = socket.id;
-        socket.emit('signupSuccess');
+        socket.emit('signupSuccess', token);
       })
       .catch(function(error) {
         console.error(error);
@@ -73,8 +77,11 @@ io.on('connection', function(socket) {
     db.query('SELECT password FROM users WHERE email = ?', loginData.email)
       .then(function(data){
         if (data[0].password === loginData.password) {
+          // Let's encode with the email for now. Encode with the entire user object if have time.
+          var token = jwt.encode(loginData.email, 'secret');
+
           loggedIn[loginData.email] = socket.id;
-          socket.emit('loginSuccess', {});
+          socket.emit('loginSuccess', token);
         } else {
           socket.emit('loginWrongPassword');
         }
@@ -87,6 +94,10 @@ io.on('connection', function(socket) {
 
   //Logout Listener
   socket.on('logout', function() {
+    // Delete token from client
+    socket.emit('logoutSuccess');
+
+    // Close socket connection
     for (var key in loggedIn) {
       if (loggedIn[key] === socket.id) {
         delete loggedIn[key];
@@ -94,6 +105,26 @@ io.on('connection', function(socket) {
     }
   });
 
+  //Check Auth Listener -- DOESNT WORK RIGHT NOW
+  socket.on('checkAuth', function(token) {
+    if (!token) {
+      socket.emit('tokenFailed');
+    } else {
+      var userEmail = jwt.decode(token, 'secret');
+
+      db.query('SELECT email FROM users WHERE email = ?', userEmail)
+        .then(function(data) {
+          if (data[0].email === userEmail) {
+            //token confirmed so send back response to client
+            socket.emit('tokenConfirmed');
+          } 
+        })
+        .catch(function(error) {
+          console.error(error);
+          socket.emit('tokenFailed');
+        })
+    }
+  });
 
   ////createEvent View
   socket.on('addEvent', function(data) {
