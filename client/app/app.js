@@ -7,7 +7,8 @@ angular.module('app', [
   'app.finalAccept',
   'app.confirmedLobby',
   'app.auth',
-  'app.factories', 
+  'app.homepage',
+  'app.factories',
   'ui.bootstrap'
   ])
 .config(function($routeProvider, $httpProvider) {
