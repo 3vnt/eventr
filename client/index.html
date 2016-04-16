@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <title>EVENTR</title>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="lib/angular-bootstrap/ui-bootstrap-csp.css">
   </head>
 
   <body>
@@ -25,7 +27,7 @@
     <!-- Event Navigation: -->
     <nav class="navigation">
       <ul>
-        <li><a href="#/events">Events</a></li>
+        <li><a href="#/createevent">create event</a></li>
         <li ng-repeat="event in user.events"></li>
       </ul>
     </nav>
@@ -38,6 +40,10 @@
     <!-- Client side dependencies here: -->
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <!-- maybe not optional: find bower install for ngAnimate -->
+    <!-- optional: find bower install for ngTouch -->
 
 
     <script src="app/app.js"></script>
