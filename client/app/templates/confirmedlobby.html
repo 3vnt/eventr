@@ -1,5 +1,11 @@
+<div ng-controller="SomeController">
+  <h1 ng-show="host"><!--boolean from authentication process-->Money Received: {{<!--calculated amount from database -->}}</h1>
+  <h1 ng-show="host"><!--boolean from authentication process-->Money Pending: {{<!--calculated amount from database -->}}</h1>
+  <h1 ng-show="host" class="ng-hide"><!--boolean from authentication process-->Amount Owed: {{<!--calculated amount from database--> }}</h1>
+</div>
+
 <div ng-controller="ConfirmedLobbyController">
-  <h1>Amount Owed: {{<!--calculated amount from database--> }}</h1>
-  <h1>Attendees: {{ <!--all confirmed participants-->}}</h1>
+  <h1>Attendees:</h1>
+  <div ng-repeat="user in event"><!--every user with event id--></div>
 
 </div>
