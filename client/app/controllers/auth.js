@@ -55,8 +55,9 @@ angular.module('app.auth', ['app.factories'])
 
   $scope.signup = function() {
     var signupData = {
-      username: $scope.signup.name,
+      username: $scope.signup.username,
       email: $scope.signup.email,
+      password: $scope.signup.password
     };
     socket.emit('signup', signupData);
   };
