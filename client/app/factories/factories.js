@@ -50,10 +50,6 @@ angular.module('app.factories', [])
     });
   };
   
-  var log_some_things = function() {
-    console.log('this for sure works');
-  };
-  
   // sends two options with a user
   var sendResponse = function(options) {
     return $http({
@@ -110,6 +106,5 @@ angular.module('app.factories', [])
 
 })
 
-.factory()
 
 ;

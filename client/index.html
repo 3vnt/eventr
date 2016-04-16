@@ -15,19 +15,21 @@
 
     <!-- User Profile: -->
     <nav class="usernav">User Navigation</nav>
+    <div ng-controller="AuthController">{{$scope.login.name}}</div>
 
     <!-- Notification Bar: -->
-    <div class="notifications">Notifications</div>
+    <div class="notifications" ng-controller="HomepageController">Notifications</div>
 
     <!-- Event Navigation: -->
     <nav class="navigation">
       <ul>
         <li><a href="#/events">Events</a></li>
+        <li ng-repeat="event in user.events"></li>
       </ul>
     </nav>
 
     <!-- Views: -->
-    <div ng-view></div>
+    <div ng-view ng-controller="Homepage Controller"></div>
 
     <!-- Client side dependencies here: -->
     <script src="lib/angular/angular.js"></script>
