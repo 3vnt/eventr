@@ -1,6 +1,6 @@
 <div ng-controller="PreferenceVoteController">
   <!--radio buttons for now-->
-  <form action="/api/endpoint" method="POST" ng-submit="QuestionsFactory.sendResponse(responses)">
+  <form ng-submit="QuestionsFactory.sendResponse(responses)">
 
       <h1>Choose an event</h1>
       <label ng-repeat='event in eventChoices'>

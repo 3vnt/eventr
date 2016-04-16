@@ -1,11 +1,34 @@
 <div ng-controller='CreateEventController'>
-  <input type="text" placeholder="event name" ng-model="eventData.name"></input>
-  <input type="text" placeholder="location name" ng-model="eventData.location"></input>
-  <input type="text" placeholder="date doesn't work" ng-model=""></input>
-  <input type="text" placeholder="deadline doesnt work" ng-model=""></input>
-  <input type="text" placeholder="event cost" ng-model="eventData.cost"></input>
-  <input type="text" placeholder="you have no friends" ng-model=""></input>
+  Event Name: <input type="text" placeholder="event name" ng-model="eventData.name"></input> <br />
+  Deadline: <input type="text" placeholder="YYYY/MM/DD" ng-model="eventData.deadline"></input> <br />
+  Estimated Total Cost: <input type="text" placeholder="in $ amount" ng-model="eventData.cost"></input> <br />
 
-  <button ng-click="addEvent()">Submit</button>
+  <form ng-submit="addFriend()">
+  Friends Invited: <input type="email" ng-model ="friendText" placeholder="friend@email.com" />
+  <input type="submit" value="submit" />
+  </form>
+  <ul ng-repeat="friend in eventData.friends">
+    <li ng-click="removeFriend(friend)">{{friend}}</li>
+  </ul>
+
+  <!-- Activity -->
+  <form ng-submit="addActivity()">
+  Activities Proposed: <input type="text" ng-model ="activityText" placeholder="activity..." />
+  <input type="submit" value="submit" />
+  </form>
+  <ul ng-repeat="activity in eventData.activities">
+    <li ng-click="removeActivity(activity)">{{activity}}</li>
+  </ul>
+
+  <!-- Time -->
+   <form ng-submit="addLocation()">
+  Locations Proposed: <input type="text" ng-model ="locationText" placeholder="location...." />
+  <input type="submit" value="submit" />
+  </form>
+  <ul ng-repeat="location in eventData.locations">
+    <li ng-click="removeLocation(location)">{{location}}</li>
+  </ul>
+
+  <button ng-click="addEvent()">Create Event</button>
 
 </div>

@@ -1,6 +1,6 @@
 angular.module('app.signup', ['app.factories'])
 
-.controller('SignupController', function($scope, socket, $location) {
+.controller('SignupController', function($scope, $location, socket) {
 
   $scope.message ='';
 
@@ -40,7 +40,6 @@ angular.module('app.signup', ['app.factories'])
     $scope.email = '';
     $scope.message = 'Email already in use please choose a new one';
   });
-
 
   socket.on('failed', function() {
     $scope.username = '';

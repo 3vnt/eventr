@@ -1,7 +1,8 @@
 angular.module('app.preferenceVote', ['app.factories'])
 
-.controller('PreferenceVoteController', function($scope, QuestionsFactory) {
-  $scope.eventChoices = ['bowling', 'dinner', 'drinks']; // should come from an ajax call.
+.controller('PreferenceVoteController', function($scope, $location, socket) {
+  // TODO: should come from an ajax call.
+  $scope.eventChoices = ['bowling', 'dinner', 'drinks']; 
   $scope.dateChoices = ['Monday', 'Tuesday', 'Wednesday'];
   
   $scope.responses = {};

@@ -9,13 +9,15 @@
   <body>
     <h1>EVENTR</h1>
 
-    <ul>
-        <li ng-controller="LogoutController"><a ng-click="logoutUser()">LOGOUT</a></li>
-    </ul>
 
     <!-- User Profile: -->
-    <nav class="usernav">User Navigation</nav>
-    <div ng-controller="AuthController">{{$scope.login.name}}</div>
+    <nav class="usernav">User Navigation
+        <li>
+            <ul ng-controller="AuthController">{{$scope.login.name}}
+                <button ng-click="logout()">Logout</button>
+            </ul>   
+        </li>
+    </nav>
 
     <!-- Notification Bar: -->
     <div class="notifications" ng-controller="HomepageController">Notifications</div>
@@ -27,6 +29,8 @@
         <li ng-repeat="event in user.events"></li>
       </ul>
     </nav>
+    <br />
+    <br />
 
     <!-- Views: -->
     <div ng-view ng-controller="Homepage Controller"></div>
@@ -36,16 +40,14 @@
     <script src="lib/angular-route/angular-route.js"></script>
 
     <script src="app/app.js"></script>
-    <script src="app/controllers/login.js"></script>
-    <script src="app/controllers/signup.js"></script>
+    <script src="app/controllers/auth.js"></script>
+    <script src="app/factories/factories.js"></script>
     <script src="app/controllers/start.js"></script>
     <script src="app/controllers/createevent.js"></script>
     <script src="app/controllers/pollresults.js"></script>
     <script src="app/controllers/preferencevote.js"></script>
     <script src="app/controllers/finalaccept.js"></script>
     <script src="app/controllers/confirmedlobby.js"></script>
-    <script src="app/controllers/logout.js"></script>
-    <script src="app/factories/factories.js"></script>
 
     <!-- Server side Dependencies: -->
     <script src="http://localhost:8080/socket.io/socket.io.js"></script>

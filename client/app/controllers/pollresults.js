@@ -1,8 +1,6 @@
 angular.module('app.pollResults', ['app.factories'])
 
 .controller('PollResultsController', function($scope, $location, socket) {
-  // TODO: is this right?
-  io.connect();
   // TODO: check if user is Host, 
   //      if is: enable choosy things.
   //      if not: just show results so far.
@@ -11,7 +9,6 @@ angular.module('app.pollResults', ['app.factories'])
   $scope.pollResults = 'poll results';
   $scope.showWarning = false;
   $scope.selectedEventAndDate = {};
-
 
   // Dummy data
   // $scope.dateChoices = [
@@ -37,8 +34,6 @@ angular.module('app.pollResults', ['app.factories'])
     // NOTE: check if values are not defined
     // TODO: Ensure values are date, time.
     if (finalChoices.event && finalChoices.date) {
-      // NOTE: currently just logs final choices
-      // TODO: should send final choices to server
       console.log(finalChoices);
       socket.emit('finalChoices', finalChoices);
       $scope.showWarning = false;
