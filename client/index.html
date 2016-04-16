@@ -21,6 +21,8 @@
 
     <!-- Notification Bar: -->
     <div class="notifications" ng-controller="HomepageController">Notifications</div>
+    <li ng-show="timeToPick">Let your guests know what the final decision is.</li>
+    <li ng-hide="voted">You've been invited to an event. Make your selection now.</li>
 
     <!-- Event Navigation: -->
     <nav class="navigation">
