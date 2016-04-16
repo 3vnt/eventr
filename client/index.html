@@ -3,15 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <title>EVENTR</title>
-    <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
 
   <body>
     <h1>EVENTR</h1>
 
-
     <!-- User Profile: -->
-    <nav class="usernav">User Navigation
+    <nav class="nav navbar-nav">User Navigation
         <li>
             <ul ng-controller="AuthController">{{$scope.login.name}}
                 <button ng-click="logout()">Logout</button>
@@ -40,6 +38,7 @@
     <!-- Client side dependencies here: -->
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
+
 
     <script src="app/app.js"></script>
     <script src="app/controllers/auth.js"></script>
