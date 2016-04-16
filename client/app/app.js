@@ -8,9 +8,10 @@ angular.module('app', [
   'app.finalAccept',
   'app.confirmedLobby',
   'app.auth',
+  'app.homepage',
   'app.factories',
-  //'ui.bootstrap'
-  ])
+  'ui.bootstrap'
+])
 .config(function($routeProvider, $httpProvider) {
   $routeProvider
     .when('/', {

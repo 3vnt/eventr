@@ -27,6 +27,7 @@ mysql.createConnection({
   host: 'localhost',
   user: 'root',
   database: 'eventr',
+  password: 'a'
 }).then(function(database){
   db = database;
   console.log('successful connection');
