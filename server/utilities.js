@@ -15,13 +15,10 @@ exports.findEmail = function(socketId, loggedIn) {
 };
 
 exports.findUser = function(db, email) {
-
-  db.query('SELECT id FROM users WHERE email = ?', email, function(err, _ID) {
-    if (err) {
-      console.log('Failed at: select id from users where email ')
-      return;
-    };
-    return _ID;
+  db.query('SELECT id FROM users WHERE email = ?', email)
+  .then(function(id){
+    console.log(id);
+    return id;
   });
 };
 

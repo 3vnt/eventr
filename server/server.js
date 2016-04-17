@@ -76,6 +76,7 @@ io.on('connection', function(socket) {
     //save into socket loggedIn user array
     db.query('SELECT * FROM users WHERE email = ?', loginData.email)
       .then(function(data){
+        console.log(socket);
         if (data[0].password === loginData.password) {
           // Let's encode with the email for now. Encode with the entire user object if have time.
           var token = jwt.encode(loginData.email, 'secret');
@@ -131,6 +132,14 @@ io.on('connection', function(socket) {
     }
   });
 
+  socket.on('retrieveNotifications', function() {
+    var email = util.findEmail(socket.id, loggedIn);
+    var id = util.fineUser(db, email);
+    db.query('SELECt * FROM events where id = ')
+
+
+  })
+
   ////createEvent View
   socket.on('addEvent', function(data) {
     //Store data into database;
@@ -141,7 +150,7 @@ io.on('connection', function(socket) {
         created_at: util.mysqlDatetime(),
         updated_at: util.mysqlDatetime(),
         event_name: data.name,
-        response_deadline: data.response_deadline,
+        response_deadline: data.deadline,
         total_cost: data.cost,
         event_host: util.findUser(db, userEmail),
     };
