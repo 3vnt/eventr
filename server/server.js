@@ -51,7 +51,7 @@ io.on('connection', function(socket) {
       username: signupData.username,
       email: signupData.email,
       password: signupData.password,
-      created_at: util.mysqlDatetime(),   //need to be reformatted -> currently hardcoded
+      created_at: util.mysqlDatetime(),
     };
     db.query("INSERT INTO users SET ?" , newUser)
       .then(function(data) {
@@ -74,14 +74,19 @@ io.on('connection', function(socket) {
   //Login Listener
   socket.on('login', function(loginData) {
     //save into socket loggedIn user array
-    db.query('SELECT password FROM users WHERE email = ?', loginData.email)
+    db.query('SELECT * FROM users WHERE email = ?', loginData.email)
       .then(function(data){
         if (data[0].password === loginData.password) {
           // Let's encode with the email for now. Encode with the entire user object if have time.
           var token = jwt.encode(loginData.email, 'secret');
-
           loggedIn[loginData.email] = socket.id;
-          socket.emit('loginSuccess', token);
+
+          var loginPackage = {
+            token: token,
+            username: data[0].username
+          };
+
+          socket.emit('loginSuccess', loginPackage);
         } else {
           socket.emit('loginWrongPassword');
         }
@@ -117,7 +122,7 @@ io.on('connection', function(socket) {
           if (data[0].email === userEmail) {
             //token confirmed so send back response to client
             socket.emit('tokenConfirmed');
-          } 
+          }
         })
         .catch(function(error) {
           console.error(error);

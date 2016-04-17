@@ -1,5 +1,6 @@
 angular.module('app', [
   'ngRoute',
+  'app.homepage',
   'app.start',
   'app.createEvent',
   'app.pollResults',
@@ -7,8 +8,8 @@ angular.module('app', [
   'app.finalAccept',
   'app.confirmedLobby',
   'app.auth',
-  'app.factories', 
-  'ui.bootstrap'
+  'app.factories',
+  //'ui.bootstrap'
   ])
 .config(function($routeProvider, $httpProvider) {
   $routeProvider

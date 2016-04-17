@@ -1,6 +1,6 @@
 angular.module('app.homepage', ['app.factories'])
 
-.controller('HomepageController', function($scope, socket, $location) {
+.controller('NotificationController', function($scope, socket, $location) {
 
   $scope.pickEventAndTime = function(responses, users) {
     var timeToPick = false;
@@ -19,7 +19,7 @@ angular.module('app.homepage', ['app.factories'])
 
 
   $scope.getEvents = function(user) {
-    
+
 
   }
 

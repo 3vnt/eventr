@@ -11,14 +11,14 @@
     <!-- User Profile: -->
     <nav class="nav navbar-nav">User Navigation
         <li>
-            <ul ng-controller="AuthController">{{$scope.login.name}}
+            <ul ng-controller="AuthController">User:{{$scope.username}}
                 <button ng-click="logout()">Logout</button>
-            </ul>   
+            </ul>
         </li>
     </nav>
 
     <!-- Notification Bar: -->
-    <div class="notifications" ng-controller="HomepageController">Notifications</div>
+    <div class="notifications" ng-controller="NotificationController">Notifications</div>
     <li ng-show="timeToPick">Let your guests know what the final decision is.</li>
     <li ng-hide="voted">You've been invited to an event. Make your selection now.</li>
 
@@ -33,7 +33,7 @@
     <br />
 
     <!-- Views: -->
-    <div ng-view ng-controller="Homepage Controller"></div>
+    <div ng-view></div>
 
     <!-- Client side dependencies here: -->
     <script src="lib/angular/angular.js"></script>
@@ -41,6 +41,7 @@
 
 
     <script src="app/app.js"></script>
+    <script src="app/controllers/homepage.js"></script>
     <script src="app/controllers/auth.js"></script>
     <script src="app/factories/factories.js"></script>
     <script src="app/controllers/start.js"></script>
