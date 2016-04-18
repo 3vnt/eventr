@@ -174,11 +174,10 @@ io.on('connection', function(socket) {
             util.createEvents_Users(db, friendID[0].id, eventid);
           });
         });
-
-
       })
-      .then(function(data) {
-        console.log('heyyyy it works', data);
+      .then(function() {
+        util.createQuestion(db, util, 'Activities', eventid, event.event_host, data.activities, friends);
+        util.createQuestion(db, util, 'Locations', eventid, event.event_host, data.locations, friends);
       });
   });
 

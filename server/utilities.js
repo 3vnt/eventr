@@ -73,4 +73,40 @@ exports.createEvents_Users = function(db, userID, eventID) {
     event_id: eventID,
   }
   return db.query('INSERT INTO events_users SET ?', temp);
-}
+};
+
+exports.createQuestion = function(db, util, text, eventID, hostID, choicesObject, friends) {
+  var question = {
+    created_at: util.mysqlDatetime(),
+    text: text,
+    creator_id: hostID,
+    event_id: eventID,
+  };
+
+  return db.query('INSERT INTO questions SET ?', question)
+    .then(function(data){
+      var questionID = data.insertId;
+      _.each(choicesObject, function(item) {
+        var choice = {
+          question_id: questionID,
+          text: item,
+          isWinningChoice: 0,
+        };
+        db.query('INSERT INTO choices SET ?', choice)
+          .then(function(data){
+            var choiceID = data.insertId;
+            _.each(friends, function(email) {
+              util.findUser(db, email)
+              .then(function(friendID) {
+                var temp = {
+                  user_id: friendID[0].id,
+                  choices_id: choiceID,
+                  vote_time: util.mysqlDatetime(),
+                }
+                db.query('INSERT INTO users_choices SET ?', temp);
+              });
+            })
+          });
+      });
+    });
+};
