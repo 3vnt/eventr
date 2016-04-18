@@ -44,8 +44,12 @@ app.use(express.static(__dirname + '/../client'));
 //////////////////////////////////////////////
 
 //Controllers -> might need to move someplace els
+
 io.on('connection', function (socket) {
 
+  socket.on('testing',function(){
+    console.log('test works');
+  });
   //Signup Listener
   socket.on('signup', function (signupData) {
     var newUser = {
@@ -179,10 +183,17 @@ io.on('connection', function (socket) {
         util.createQuestion(db, util, 'Activities', eventid, event.event_host, data.activities, friends);
         util.createQuestion(db, util, 'Locations', eventid, event.event_host, data.locations, friends);
       })
-      .then(function () {
-        socket.emit('eventID', eventid);
+      .then(function(){
+        db.query('SELECT * FROM events_users WHERE event_id = ?', eventid)
+          .then(function(data){
+            return data;
+          })
+          .then(function(data){
+            util.eventBroadcast(io, db, eventid, loggedIn, 'this is working');
+            socket.emit('eventID', eventid);
+          });
       });
-  });
+    });
 
   socket.on('pollResultsData', function (eventID) {
     var package = {
@@ -208,6 +219,7 @@ io.on('connection', function (socket) {
   });
 
 });
+
 
 //util.eventBroadcast(io, db, event, loggedIn, data);
 
