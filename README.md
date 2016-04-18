@@ -43,9 +43,9 @@
   - random redirects
 
 ##Team
-  Scrum Master - Thomas Ingalls
-  Product Manager - Genevieve Sublette
-  Team Member - Jonathen Chen
-  Team Member - Haoming Huang
+  - Scrum Master - Thomas Ingalls
+  - Product Manager - Genevieve Sublette
+  - Team Member - Jonathen Chen
+  - Team Member - Haoming Huang
 
 
