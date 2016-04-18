@@ -32,28 +32,24 @@ exports.findUser = function(db, email) {
 };
 
 //Broadcast to all users that are logged in to that event;
-exports.eventBroadcast = function(io, db, event, loggedIn, data) {
-  //DB query events - find event ID
-  db.query('SELECT id FROM events WHERE name = ?', event)
-    .then(function(eventID){
-      console.log('id', data);
-      //Find All User ID that matches the event
-      db.query('SELECT user_id FROM events_users WHERE event_id = ?', eventID)
-      .then(function(userID){
-        //For each user in the event
-        _.each(userID, function(id) {
-          //Find their emails
-          db.query('SELECT email FROM users WHERE id = ?', id)
-            .then(function(email) {
-              //then check if they are logged in
-              if(loggedIn[email]) {
-                //if yes then broadcast to them something specific
-                io.to(loggedIn[email]).emit('eventupdate', data);
-              }
-            })
-        });
-      });
+exports.eventBroadcast = function(io, db, eventID, loggedIn, data) {
+  db.query('SELECT * FROM events_users WHERE event_id = ?', eventID)
+    .then(function(users){
+      //For each user in the event
+      _.each(users, function(id) {
+        console.log('the ids', id.user_id);
+        db.query('SELECT email FROM users WHERE id = ?', id.user_id)
+          .then(function(data) {
+            var email = data[0].email;
+            //then check if they are logged in
+            if(loggedIn[email]) {
+              //if yes then broadcast to them something specific
+              //io.sockets.emit('eventUpdate', data);
+              io.sockets.connected[loggedIn[email]].emit('eventUpdate', data);
+            }
+          })
     });
+  });
 };
 
 //Time Functions //////////////////
