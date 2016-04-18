@@ -45,6 +45,7 @@ app.use(express.static(__dirname + '/../client'));
 //Controllers -> might need to move someplace els
 io.on('connection', function(socket) {
 
+
   //Signup Listener
   socket.on('signup', function(signupData) {
     var newUser = {
@@ -126,15 +127,15 @@ io.on('connection', function(socket) {
         .catch(function(error) {
           console.error(error);
           socket.emit('tokenFailed');
-        })
+        });
     }
   });
 
-  socket.on('retrieveNotifications', function() {
-    var email = util.findEmail(socket.id, loggedIn);
-    var id = util.fineUser(db, email);
-    db.query('SELECT * FROM events where id = ');
-  });
+  // socket.on('retrieveNotifications', function() {
+  //   var email = util.findEmail(socket.id, loggedIn);
+  //   var id = util.fineUser(db, email);
+  //   db.query('SELECT * FROM events where id = ');
+  // });
 
   ////createEvent View
   socket.on('addEvent', function(data) {
@@ -180,6 +181,7 @@ io.on('connection', function(socket) {
       .then(function(){
         socket.emit('eventID', eventid);
       });
+    });
 
     socket.on('pollResultsData', function(eventID){
       var package = {
@@ -190,21 +192,23 @@ io.on('connection', function(socket) {
       db.query('SELECT * FROM events WHERE id = ?', eventID)
         .then(function(data){
           package['event'] = data[0];
-          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = Activities)', eventID);
+          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = `Activities`)', eventID);
+        }).then(function(choiceID){
+          return db.query('SELECT * FROM choices WHERE question_id = ?', choiceID);
         }).then(function(activitiesData){
           package.activites = activitiesData;
-          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = Locations)', eventID);
+          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = `Locations`)', eventID);
+        }).then(function(choiceID){
+          return db.query('SELECT * FROM choices WHERE question_id = ?', choiceID);
         }).then(function(locationsData){
           package.locations = locationsData;
           socket.emit('pollResultsPackage', package);
         });
     });
+});
 
-  });
 
   //util.eventBroadcast(io, db, event, loggedIn, data);
-
-});
 
 
 /////////////////////////////////////////////
