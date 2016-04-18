@@ -9,7 +9,7 @@ angular.module('app', [
   'app.confirmedLobby',
   'app.auth',
   'app.factories',
-  //'ui.bootstrap'
+  'ui.bootstrap'
   ])
 .config(function($routeProvider, $httpProvider) {
   $routeProvider
