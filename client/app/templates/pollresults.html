@@ -1,4 +1,5 @@
 <div ng-controller="PollResultsController">
+  <div class="container">
   <hr>
   <h3> Dates </h3>
   <ul class="list-group" ng-model="dateChoices">
@@ -11,7 +12,9 @@
       <span>Votes: {{ dateObject.numVotes }}</span>
     </li>
   </ul>
+  </div>
   <hr>
+  <div class="container">
   <h3> Events </h3>
   <ul class="list-group" ng-model="eventChoices">
     <li 
@@ -23,8 +26,11 @@
       <span>Votes: {{ eventObject.numVotes }}</span>
     </li>
   </ul>
+  </div>
   <hr>
   <h5 ng-show="showWarning">Please select a final choice for both a date and an event!</h5>
-  <button class="btn btn-default" ng-click="sendConfirmation(selectedEventAndDate)">Confirm Event Date and Time</button>
+  <div class="container">
+  <button class="btn btn-success" ng-click="sendConfirmation(selectedEventAndDate)">Confirm Event Date and Time</button>
+  </div>
 </div>
 

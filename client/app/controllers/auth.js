@@ -8,6 +8,8 @@ angular.module('app.auth', ['app.factories'])
   $scope.loginMessage = 'Please login.';
   $scope.signupMessage = 'Please signup.';
 
+  $scope.loggedIn = AuthFactory.isAuth;
+
   // BEGIN all authentication-related event listeners ------------------------------------
   socket.on('loginSuccess', function(package) {
     console.log($scope.username);
@@ -57,6 +59,7 @@ angular.module('app.auth', ['app.factories'])
   };
 
   $scope.signup = function() {
+    console.log('signup is running');
     if($scope.signup.password === $scope.signup.passwordConfirm) {
       var signupData = {
         username: $scope.signup.username,

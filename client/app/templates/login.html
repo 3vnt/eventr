@@ -1,9 +1,19 @@
 <div ng-controller="AuthController">
-<h3>{{ loginMessage }}</h3>
-<form class="form-group">
-  Email: <input class="form-control" type="email" ng-model = "login.email" required /> <br />
-  Password: <input class="form-control" type="password" ng-model = "login.password" required /> <br />
-  <input class="form-control" type="submit" ng-click="login()" value="Login">
-  <a href="#/signup">Signup</a>
-</form> <br />
+    <div ng-hide="loggedIn()" class="container">
+        <h3>{{ loginMessage }}</h3>
+        <form>
+          <div class="form-group">
+            <label for="userEmail">Email Address</label>
+            <input class="form-control" id="userEmail" type="email" ng-model="login.email" required />
+          </div>
+          <div class="form-group">
+            <label for="userPassword">Password</label>
+            <input class="form-control" id="userPassword" type="password" ng-model="login.password" required />
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success" type="submit" ng-click="login()" value="Login">Login</button>
+            <a href="#/signup">Signup</a>
+          </div>
+        </form>
+    </div>
 </div>
