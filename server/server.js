@@ -27,7 +27,6 @@ mysql.createConnection({
   host: 'localhost',
   user: 'root',
   database: 'eventr',
-  password: 'a'
 }).then(function(database) {
   db = database;
 });
@@ -43,8 +42,12 @@ app.use(express.static(__dirname + '/../client'));
 //////////////////////////////////////////////
 
 //Controllers -> might need to move someplace els
+
 io.on('connection', function (socket) {
 
+  socket.on('testing',function(){
+    console.log('test works');
+  });
   //Signup Listener
   socket.on('signup', function (signupData) {
     var newUser = {
@@ -178,8 +181,15 @@ io.on('connection', function (socket) {
         util.createQuestion(db, util, 'Activities', eventid, event.event_host, data.activities, friends);
         util.createQuestion(db, util, 'Locations', eventid, event.event_host, data.locations, friends);
       })
-      .then(function () {
-        socket.emit('eventID', eventid);
+      .then(function(){
+        db.query('SELECT * FROM events_users WHERE event_id = ?', eventid)
+          .then(function(data){
+            return data;
+          })
+          .then(function(data){
+            util.eventBroadcast(io, db, eventid, loggedIn, 'this is working');
+            socket.emit('eventID', eventid);
+          });
       });
     });
 
@@ -195,10 +205,8 @@ io.on('connection', function (socket) {
           package['event'] = data[0];
           return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = "Activities")', eventID);
         }).then(function(choiceID){
-          console.log('choiceID', choiceID[0].id);
           return db.query('SELECT * FROM choices WHERE question_id = ?', choiceID[0].id);
         }).then(function(activitiesData){
-          console.log('the data', activitiesData); 
           package.activities = activitiesData;
           return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = "Locations")', eventID);
         }).then(function(choiceID){

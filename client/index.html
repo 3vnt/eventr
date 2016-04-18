@@ -12,14 +12,14 @@
     <div class="container">
     <h1>EVENTR</h1>
     <!-- User Profile: -->
-    <nav>User Navigation
-      <ul class="nav nav-tabs" ng-controller="AuthController">User:{{$scope.username}}
-        <button ng-click="logout()" class="btn btn-default">Logout</button>
+    <nav>Navigation
+      <ul class="nav nav-tabs" ng-controller="AuthController">{{$scope.username}}
+        <button ng-click="logout()" class="btn btn-default pull-right">Logout</button>
       </ul>
     </nav>
 
     <!-- Notification Bar: -->
-    <div ng-controller="NotificationController">Notifications</div>
+    <div ng-controller="NotificationController" class="list-group">Notifications</div>
     <li class="list-group-item" ng-show="timeToPick">Let your guests know what the final decision is.</li>
     <li class="list-group-item" ng-hide="voted">You've been invited to an event. Make your selection now.</li>
 
