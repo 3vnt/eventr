@@ -1,11 +1,27 @@
 <div ng-controller="AuthController">
-<form class="form-group">
-  <h3> {{ signupMessage }}</h3>
-  Name: <input class="form-control" type="text" ng-model = "signup.username" required /> <br />
-  Email: <input class="form-control" type="email" ng-model = "signup.email" required /> <br />
-  Password: <input class="form-control" type="password" ng-model = "signup.password" required /> <br />
-  Confirm Password: <input class="form-control" type="password" ng-model = "signup.passwordConfirm" required /> <br >
-  <input class="form-control" type="submit" ng-click="signup()" value="Signup">
-  <a href="#/login">Login</a>
-</form> <br />
+    <div class="container">
+        <form class="col-md-6">
+            <h3> {{ signupMessage }}</h3>
+            <div class="form-group">
+                <label for="userName">Name:</label>
+                <input id="userName" class="form-control" type="text" ng-model="signup.username" required />
+            </div>
+            <div class="form-group">
+                <label for="userEmail">Email:</label>
+                <input id="userEmail" class="form-control" type="email" ng-model="signup.email" required />
+            </div>
+            <div class="form-group">
+                <label for="userPassword">Password:</label>
+                <input id="userPassword" class="form-control" type="password" ng-model="signup.password" required />
+            </div>
+            <div class="form-group">
+                <label for="userPasswordConfirm">Confirm Password:</label>
+                <input id="userPasswordConfirm" class="form-control" type="password" ng-model="signup.passwordConfirm" required />
+            </div>
+            <div class="form-group">
+                <input class="btn btn-success" type="submit" ng-click="signup()" value="Signup">
+                <a class="pull-right" href="#/login">Login</a>
+            </div>
+        </form>
+    </div>
 </div>
