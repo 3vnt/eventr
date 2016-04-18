@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <title>EVENTR</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="lib/angular-bootstrap/ui-bootstrap-csp.css">
   </head>
 
   <body>
@@ -37,6 +38,10 @@
     <!-- Client side dependencies here: -->
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <!-- maybe not optional: find bower install for ngAnimate -->
+    <!-- optional: find bower install for ngTouch -->
 
 
     <script src="app/app.js"></script>
@@ -49,6 +54,7 @@
     <script src="app/controllers/preferencevote.js"></script>
     <script src="app/controllers/finalaccept.js"></script>
     <script src="app/controllers/confirmedlobby.js"></script>
+    <script src="app/controllers/homepage.js"></script>
 
     <!-- Server side Dependencies: -->
     <script src="http://localhost:8080/socket.io/socket.io.js"></script>
