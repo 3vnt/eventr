@@ -76,7 +76,6 @@ io.on('connection', function(socket) {
     //save into socket loggedIn user array
     db.query('SELECT * FROM users WHERE email = ?', loginData.email)
       .then(function(data){
-        console.log(socket);
         if (data[0].password === loginData.password) {
           // Let's encode with the email for now. Encode with the entire user object if have time.
           var token = jwt.encode(loginData.email, 'secret');
@@ -93,7 +92,6 @@ io.on('connection', function(socket) {
         }
       })
       .catch(function(error) {
-        console.error(error);
         socket.emit('loginUserDoesNotExist');
       });
   });

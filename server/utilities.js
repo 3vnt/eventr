@@ -8,7 +8,8 @@ var _ = require('underscore');
 /////////////////////////////////////////////
 exports.findEmail = function(socketId, loggedIn) {
   _.each(loggedIn, function(email) {
-    if(loggedIn[email] === socketID) {
+    if(loggedIn[email] === socketId) {
+      console.log(email);
       return email;
     };
   });
@@ -22,36 +23,29 @@ exports.findUser = function(db, email) {
   });
 };
 
-
-//use table joining
+//Broadcast to all users that are logged in to that event;
 exports.eventBroadcast = function(io, db, event, loggedIn, data) {
   //DB query events - find event ID
-  db.query('SELECT id FROM events WHERE name = ?', event, function(err, eventID) {
-    if (err) {
-      console.log('failing at: server SELECT id from events WHERE name = event Call', err);
-      return;
-    };
-    //DB query users - all users that match
-    db.query('SELECT user_id FROM events_users WHERE event_id = ?', eventID, function(err, userArray) {
-      if (err) {
-        console.log('failing at: SELECT user_id FROM events_users WHERE event_id = eventID', err);
-        return;
-      };
-      //broadcast to each individual in the array
-      _.each(userArray, function(id) {
-        db.query('SELECT email FROM users WHERE id = ?', id, function(err, email) {
-          if (err) {
-            console.log('SELECT email FROM users WHERE id =', id, err);
-            return;
-          };
-
-          if(loggedIn[email]) {
-          io.to(loggedIn[email]).emit('eventUpdate', data);
-          }
-        })
+  db.query('SELECT id FROM events WHERE name = ?', event)
+    .then(function(eventID){
+      console.log('id', data);
+      //Find All User ID that matches the event
+      db.query('SELECT user_id FROM events_users WHERE event_id = ?', eventID)
+      .then(function(userID){
+        //For each user in the event
+        _.each(userID, function(id) {
+          //Find their emails
+          db.query('SELECT email FROM users WHERE id = ?', id)
+            .then(function(email) {
+              //then check if they are logged in
+              if(loggedIn[email]) {
+                //if yes then broadcast to them something specific
+                io.to(loggedIn[email]).emit('eventupdate', data);
+              }
+            })
+        });
       });
-    })
-  });
+    });
 };
 
 //Time Functions //////////////////
