@@ -1,67 +1,77 @@
 <div ng-controller='CreateEventController' class="container">
-  <form>
-    <div class="row">
-    <div class="form-group">
-      <label for="eventName">Event Name</label>
-        <input id="eventName" type="text" placeholder="event name" class="form-control" ng-model="eventData.name"></input>
-    </div>
-    <div class="form-group">
-      <label for="eventDeadline">Deadline</label>
-        <input id="eventDeadline" type="text" placeholder="YYYY/MM/DD" class="form-control" ng-model="eventData.deadline"></input>
-    </div>
-    <div class="form-group">
-      <label for="eventCost">Estimated Total Cost:</label>
-        <input id="eventCost" type="text" placeholder="in $ amount" class="form-control" ng-model="eventData.cost"></input>
-    </div>
-    </div>
-  </form>
-    <form ng-submit="addFriend()">
-    <div class="row">
-    <div class="form-group">
-      <label for="eventFriends">Friends Invited:</label>
-        <input id="eventFriends" class="form-control" type="email" ng-model="friendText" placeholder="friend@email.com"/>
-    </div>
-    </div>
-    <div class="row">
-        <button type="submit" class="btn btn-success">Submit</button>
-    </div>
+    <form>
+        <div>
+            <div class="form-group">
+                <label for="eventName">Event Name</label>
+                <input id="eventName" type="text" placeholder="event name" class="form-control" ng-model="eventData.name"></input>
+            </div>
+        </div>
+        <div class="form-inline">
+            <div class="form-group">
+                <label for="eventDeadline">Deadline</label>
+                <input id="eventDeadline" type="text" placeholder="YYYY/MM/DD" class="form-control" ng-model="eventData.deadline"></input>
+            </div>
+            <div class="form-group pull-right">
+                <label for="eventCost">Estimated Total Cost:</label>
+                <input id="eventCost" type="text" placeholder="in $ amount" class="form-control" ng-model="eventData.cost"></input>
+            </div>
+        </div>
+        <br>
+        <br>
     </form>
-    <div class="row">
+
+    <form ng-submit="addFriend()">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label for="eventFriends" class="col-xs-3 control-label">Friends Invited:</label>
+                <div class="col-xs-6">
+                    <input id="eventFriends" class="form-control" type="email" ng-model="friendText" placeholder="friend@email.com" />
+                </div>
+                <div class="col-xs-3">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
     <ul ng-repeat="friend in eventData.friends" class="list-group">
         <li ng-click="removeFriend(friend)" class="list-group-item">{{friend}}</li>
     </ul>
-    </div>
     <!-- Activity -->
     <form ng-submit="addActivity()">
-      <div class="row">
-        <div class="form-group">
-          <label for="newActivity">Activities Proposed:</label>
-            <input type="text" id="newActivity" class="form-control" ng-model="activityText" placeholder="activity..." />
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-xs-3 control-label" for="newActivity">Activities Proposed:</label>
+                <div class="col-xs-6">
+                    <input type="text" id="newActivity" class="form-control" ng-model="activityText" placeholder="activity..." />
+                </div>
+                <div class="col-xs-3">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="row">
-        <button type="submit" class="btn btn-success">Submit</button>
-      </div>
     </form>
     <ul ng-repeat="activity in eventData.activities" class="list-group">
         <li ng-click="removeActivity(activity)" class="list-group-item">{{activity}}</li>
     </ul>
     <!-- Time -->
     <form ng-submit="addLocation()">
-      <div class="row">
-        <div class="form-group">
-          <label for="newLocation">Locations Proposed:</label>
-            <input type="text" id="newLocation" class="form-control" ng-model="locationText" placeholder="location...." />
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-xs-3 control-label" for="newLocation">Locations Proposed:</label>
+                <div class="col-xs-6">
+                    <input type="text" id="newLocation" class="form-control" ng-model="locationText" placeholder="location...." />
+                </div>
+                <div class="col-xs-3">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="row">
-        <button type="submit" class="btn btn-success">Submit</button>
-      </div>
     </form>
     <ul ng-repeat="location in eventData.locations" class="list-group">
         <li ng-click="removeLocation(location)" class="list-group-item">{{location}}</li>
     </ul>
-  <div class="row">
-    <button ng-click="addEvent()" class="btn btn-success">Create Event</button>
-  </div>
+    <div class="row">
+        <button ng-click="addEvent()" class="btn btn-success">Create Event</button>
+    </div>
 </div>
