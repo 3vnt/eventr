@@ -10,6 +10,8 @@ angular.module('app.pollResults', ['app.factories'])
   $scope.showWarning = false;
   $scope.selectedEventAndDate = {};
 
+  $scope.dateChoices = [];
+  $scope.eventChoices = [];
   // Dummy data
   // $scope.dateChoices = [
   //   {date: new Date(), numVotes: 3},
@@ -21,6 +23,29 @@ angular.module('app.pollResults', ['app.factories'])
   //   {event: 'movies',      numVotes: 3},
   //   {event: 'skydiving',   numVotes: 5}
   // ];
+
+  $scope.on('pollResultsPackage', function(package) {
+    // console.log(package);
+    var locations = package.locations;
+    var activities = package.activities; 
+    var event = package.event;
+
+    for (var i = 0; i < locations.length; i++) {
+      var datesToAdd = {
+        date: locations.text,
+        numVotes: locations.votesFor
+      };
+    }
+
+    for (var i = 0; i < activities.length; i++) {
+      var eventsToAdd = {
+        event: activities.text,
+        numVotes: activities.votesFor
+      };
+    }
+
+
+  });
 
   $scope.hostSelectFinalChoice = function(choiceType, choiceObject) {
     $scope.selectedEventAndDate[choiceType] = choiceObject[choiceType];
@@ -42,5 +67,12 @@ angular.module('app.pollResults', ['app.factories'])
       $scope.showWarning = true;
     }
   };
-  // 
+  
+  $scope.getEventID = function() {
+    var eventID = $window.localStorage.getItem('com.eventID');
+
+    socket.emit('pollResultsData', eventID);
+  };
+  getEventID(); //get immediately 
+
 });

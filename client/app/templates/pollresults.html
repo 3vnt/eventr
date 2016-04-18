@@ -22,7 +22,7 @@
       ng-repeat="eventObject in eventChoices | orderBy:'-numVotes'" 
       ng-click="hostSelectFinalChoice('event', eventObject)"
       ng-class="{'selectedEventAndDate': toggleClass('event', eventObject) }">
-      <span>Date: {{ eventObject.event }}</span>
+      <span>Event: {{ eventObject.event }}</span>
       <span>Votes: {{ eventObject.numVotes }}</span>
     </li>
   </ul>
