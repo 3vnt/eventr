@@ -1,6 +1,6 @@
 angular.module('app.createEvent', ['app.factories'])
 
-.controller('CreateEventController', function($scope, socket, $location) {
+.controller('CreateEventController', function($scope, socket, $location, $window) {
 
   $scope.eventData = {
     deadline: '2016-05-01', //yyyy-mm-dd
@@ -8,6 +8,11 @@ angular.module('app.createEvent', ['app.factories'])
     activities: {},
     locations: {},
   };
+
+  socket.on('eventID', function(eventID) {
+    $window.localStorage.setItem('com.eventID', eventID);
+    $location.path('/pollresults');
+  });
 
   $scope.addFriend = function() {
     $scope.eventData.friends[$scope.friendText] = $scope.friendText;
@@ -37,10 +42,8 @@ angular.module('app.createEvent', ['app.factories'])
     delete $scope.eventData.locations[location];
   };
 
-
   $scope.addEvent = function() {
     socket.emit('addEvent', $scope.eventData);
-    $location.path('/pollresults');
   };
 
 });
