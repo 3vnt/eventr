@@ -4,47 +4,46 @@
     <meta charset="utf-8" />
     <title>EVENTR</title>
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bootstrap-theme.css">
     <link rel="stylesheet" type="text/css" href="lib/angular-bootstrap/ui-bootstrap-csp.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
 
   <body>
+    <div class="container">
     <h1>EVENTR</h1>
-
     <!-- User Profile: -->
-    <nav class="nav navbar-nav">User Navigation
-        <li>
-            <ul ng-controller="AuthController">User:{{$scope.username}}
-                <button ng-click="logout()">Logout</button>
-            </ul>
-        </li>
+    <nav>Navigation
+      <ul class="nav nav-tabs" ng-controller="AuthController">{{$scope.username}}
+        <button ng-click="logout()" class="btn btn-default pull-right">Logout</button>
+      </ul>
     </nav>
 
     <!-- Notification Bar: -->
-    <div class="notifications" ng-controller="NotificationController">Notifications</div>
-    <li ng-show="timeToPick">Let your guests know what the final decision is.</li>
-    <li ng-hide="voted">You've been invited to an event. Make your selection now.</li>
+    <div ng-controller="NotificationController" class="list-group">Notifications</div>
+    <li class="list-group-item" ng-show="timeToPick">Let your guests know what the final decision is.</li>
+    <li class="list-group-item" ng-hide="voted">You've been invited to an event. Make your selection now.</li>
 
     <!-- Event Navigation: -->
-    <nav class="navigation">
-      <ul>
-        <li><a href="#/createevent">create event</a></li>
-        <li ng-repeat="event in user.events"></li>
+    <nav class="nav navbar-nav">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-success"><a href="#/events">My Events</a></li>
+        <li class="list-group-item" ng-repeat="event in user.events"></li>
       </ul>
     </nav>
     <br />
     <br />
-
+  </div>
     <!-- Views: -->
-    <div ng-view></div>
+    <div ng-view ng-controller="NotificationController"></div>
 
     <!-- Client side dependencies here: -->
     <script src="lib/angular/angular.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
-    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="lib/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap.js"></script>
     <!-- maybe not optional: find bower install for ngAnimate -->
     <!-- optional: find bower install for ngTouch -->
-
 
     <script src="app/app.js"></script>
     <script src="app/controllers/homepage.js"></script>
@@ -59,6 +58,7 @@
 
     <!-- Server side Dependencies: -->
     <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
 
   </body>
 </html>

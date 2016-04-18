@@ -8,9 +8,10 @@ angular.module('app', [
   'app.finalAccept',
   'app.confirmedLobby',
   'app.auth',
+  'app.homepage',
   'app.factories',
   'ui.bootstrap'
-  ])
+])
 .config(function($routeProvider, $httpProvider) {
   $routeProvider
     .when('/', {
@@ -60,7 +61,7 @@ angular.module('app', [
       controller: 'AuthController'
     })
     .otherwise({
-      redirectTo: '/signup'
+      redirectTo: !!window.localStorage.getItem('com.eventr') ? '/createevent' : '/signup'
     });
 
     // Inject an interceptor to stop all outbound requests and look in local storage to find the user's token and then add it to the header so the server can validate the request
