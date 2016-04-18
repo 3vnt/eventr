@@ -60,6 +60,7 @@ CREATE TABLE events (
 CREATE TABLE users_choices (
   user_id int NOT NULL,
   choices_id int NOT NULL,
+  voted int NOT NULL DEFAULT 0,
   vote_time DATETIME NOT NULL
 );
 
@@ -87,7 +88,8 @@ CREATE TABLE users_messages (
 CREATE TABLE choices (
   id int NOT NULL AUTO_INCREMENT,
   text varchar(140) NOT NULL,
-  isWinningChoice bool NOT NULL,
+  votesFor int NOT NULL DEFAULT 0,
+  maxVotes int NOT NUlL,
   question_id int NOT NULL,
   PRIMARY KEY (id)
 );

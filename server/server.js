@@ -134,10 +134,8 @@ io.on('connection', function(socket) {
   socket.on('retrieveNotifications', function() {
     var email = util.findEmail(socket.id, loggedIn);
     var id = util.fineUser(db, email);
-    db.query('SELECt * FROM events where id = ')
-
-
-  })
+    db.query('SELECT * FROM events where id = ');
+  });
 
   ////createEvent View
   socket.on('addEvent', function(data) {
@@ -179,7 +177,30 @@ io.on('connection', function(socket) {
       .then(function() {
         util.createQuestion(db, util, 'Activities', eventid, event.event_host, data.activities, friends);
         util.createQuestion(db, util, 'Locations', eventid, event.event_host, data.locations, friends);
+      })
+      .then(function(){
+        socket.emit('eventID', eventid);
       });
+
+    socket.on('pollResultsData', function(eventID){
+      var package = {
+        event: {},
+        activites: [],
+        locations: [],
+      };
+      db.query('SELECT * FROM events WHERE id = ?', eventID)
+        .then(function(data){
+          package['event'] = data[0];
+          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = Activities)', eventID);
+        }).then(function(activitiesData){
+          package.activites = activitiesData;
+          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = Locations)', eventID);
+        }).then(function(locationsData){
+          package.locations = locationsData;
+          socket.emit('pollResultsPackage', package);
+        });
+    });
+
   });
 
   //util.eventBroadcast(io, db, event, loggedIn, data);
@@ -194,4 +215,3 @@ server.listen(port);
 
 ///Exportation
 module.exports = app;
-module.exports = db;
