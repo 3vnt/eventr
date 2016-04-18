@@ -180,6 +180,7 @@ io.on('connection', function(socket) {
       .then(function(){
         socket.emit('eventID', eventid);
       });
+    });
 
     socket.on('pollResultsData', function(eventID){
       var package = {
@@ -190,17 +191,15 @@ io.on('connection', function(socket) {
       db.query('SELECT * FROM events WHERE id = ?', eventID)
         .then(function(data){
           package['event'] = data[0];
-          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = Activities)', eventID);
+          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = "Activities")', eventID);
         }).then(function(activitiesData){
           package.activites = activitiesData;
-          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = Locations)', eventID);
+          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = "Locations")', eventID);
         }).then(function(locationsData){
           package.locations = locationsData;
           socket.emit('pollResultsPackage', package);
         });
     });
-
-  });
 
   //util.eventBroadcast(io, db, event, loggedIn, data);
 

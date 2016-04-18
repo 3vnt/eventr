@@ -1,6 +1,6 @@
 angular.module('app.pollResults', ['app.factories'])
 
-.controller('PollResultsController', function($scope, $location, socket) {
+.controller('PollResultsController', function($scope, $location, socket, $window) {
   // TODO: check if user is Host, 
   //      if is: enable choosy things.
   //      if not: just show results so far.
@@ -24,8 +24,10 @@ angular.module('app.pollResults', ['app.factories'])
   //   {event: 'skydiving',   numVotes: 5}
   // ];
 
-  $scope.on('pollResultsPackage', function(package) {
-    // console.log(package);
+  socket.on('pollResultsPackage', function(package) {
+    console.log('Locations: ', package.locations);
+    console.log('Activities: ', package.activities);
+
     var locations = package.locations;
     var activities = package.activities; 
     var event = package.event;
@@ -73,6 +75,6 @@ angular.module('app.pollResults', ['app.factories'])
 
     socket.emit('pollResultsData', eventID);
   };
-  getEventID(); //get immediately 
+  $scope.getEventID(); //get immediately 
 
 });
