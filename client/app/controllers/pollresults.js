@@ -12,6 +12,10 @@ angular.module('app.pollResults', ['app.factories'])
 
   $scope.dateChoices = [];
   $scope.eventChoices = [];
+  $scope.eventName = '';
+  $scope.eventDeadline = '';
+  $scope.eventParticipants = [];
+
   // Dummy data
   // $scope.dateChoices = [
   //   {date: new Date(), numVotes: 3},
@@ -25,26 +29,31 @@ angular.module('app.pollResults', ['app.factories'])
   // ];
 
   socket.on('pollResultsPackage', function(package) {
-    console.log('Locations: ', package.locations);
-    console.log('Activities: ', package.activities);
-
+    // console.log('Package: ', package);
+    $scope.eventParticipants = package.participants;
     var locations = package.locations;
     var activities = package.activities; 
     var event = package.event;
+    var participants = package.participants;
 
     for (var i = 0; i < locations.length; i++) {
-      var datesToAdd = {
-        date: locations.text,
-        numVotes: locations.votesFor
+      var dateToAdd = {
+        date: locations[i].text,
+        numVotes: locations[i].votesFor
       };
+      $scope.dateChoices.push(dateToAdd);
     }
 
     for (var i = 0; i < activities.length; i++) {
-      var eventsToAdd = {
-        event: activities.text,
-        numVotes: activities.votesFor
+      var eventToAdd = {
+        event: activities[i].text,
+        numVotes: activities[i].votesFor
       };
+      $scope.eventChoices.push(eventToAdd);
     }
+
+    $scope.eventName = package.event.event_name;
+    $scope.eventDeadline = package.event.response_deadline.slice(0, 10);
 
 
   });

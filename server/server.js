@@ -182,32 +182,38 @@ io.on('connection', function (socket) {
       .then(function () {
         socket.emit('eventID', eventid);
       });
-  });
+    });
 
-  socket.on('pollResultsData', function (eventID) {
-    var package = {
-      event: {},
-      activites: [],
-      locations: [],
-    };
-    db.query('SELECT * FROM events WHERE id = ?', eventID)
-      .then(function (data) {
-        package['event'] = data[0];
-        return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = `Activities`)', eventID);
-      }).then(function (choiceID) {
-        return db.query('SELECT * FROM choices WHERE question_id = ?', choiceID);
-      }).then(function (activitiesData) {
-        package.activites = activitiesData;
-        return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = `Locations`)', eventID);
-      }).then(function (choiceID) {
-        return db.query('SELECT * FROM choices WHERE question_id = ?', choiceID);
-      }).then(function (locationsData) {
-        package.locations = locationsData;
-        socket.emit('pollResultsPackage', package);
-      });
-  });
-
+    socket.on('pollResultsData', function(eventID){
+      var package = {
+        event: {},
+        activities: [],
+        locations: [],
+        participants: [],
+      };
+      db.query('SELECT * FROM events WHERE id = ?', eventID)
+        .then(function(data){
+          package['event'] = data[0];
+          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = "Activities")', eventID);
+        }).then(function(choiceID){
+          console.log('choiceID', choiceID[0].id);
+          return db.query('SELECT * FROM choices WHERE question_id = ?', choiceID[0].id);
+        }).then(function(activitiesData){
+          console.log('the data', activitiesData); 
+          package.activities = activitiesData;
+          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = "Locations")', eventID);
+        }).then(function(choiceID){
+          return db.query('SELECT * FROM choices WHERE question_id = ?', choiceID[0].id);
+        }).then(function(locationsData){
+          package.locations = locationsData;
+          return db.query('SELECT username from events_users left join users on users.id = events_users.user_id where event_id = ?', eventID);
+        }).then(function(arrayOfUserId){
+          package.participants = arrayOfUserId;
+          socket.emit('pollResultsPackage', package);
+        });
+    });
 });
+
 
 //util.eventBroadcast(io, db, event, loggedIn, data);
 
