@@ -6,19 +6,20 @@ angular.module('app.signup', ['app.factories'])
 
   //Submits login information for user
   $scope.signup = function() {
-    if ($scope.password === $scope.passwordConfirm) {
+    //if ($scope.password === $scope.passwordConfirm) {
       console.log('firing');
       socket.emit('signup', {
         username: $scope.input.username,
         email: $scope.input.email,
         password: $scope.input.password,
-      })
+      }
+      )
 
-    } else {
-      $scope.password = '';
-      $scope.passwordConfirm = '';
-      $scope.message = "Your Password did not match please try again";
-    }
+  //   } else {
+  //     $scope.password = '';
+  //     $scope.passwordConfirm = '';
+  //     $scope.message = "Your Password did not match please try again";
+  //   }
   }
 
   //Success will redirect

@@ -1,28 +1,32 @@
 <div ng-controller="PreferenceVoteController">
   <!--radio buttons for now-->
-  <form class="form-group" ng-submit="QuestionsFactory.sendResponse(responses)">
-
-      <h1>Choose an event</h1>
-      <label ng-repeat='event in eventChoices'>
-        <input class="form-control"
+  <form ng-submit="QuestionsFactory.sendResponse(responses)">
+  <div class="container">
+    <h4>Choose an Event</h4>
+    <div class="radio" ng-repeat='event in eventChoices'>
+      <label>
+        <input class="radio"
           type='radio'
           name='allEvents'
           ng-value='event' 
-          ng-model='selectedEvent'> {{ event }} </br>
+          ng-model='selectedEvent'> {{ event }}
       </label>
-
-
-      <h1>Choose a date</h1>
-      <label ng-repeat='date in dateChoices'>
-        <input class="form-control"
+    </div>
+  </div>
+  <div class="container">
+    <h4>Choose a Date</h4>
+      <div class="radio" ng-repeat='date in dateChoices'>
+      <label>
+        <input class="radio"
           type='radio'
           name='allDates' 
           ng-value='date'
-          ng-model='responses.selectedDate' > {{ date }} </br>
+          ng-model='responses.selectedDate'> {{ date }}
       </label>
-
-    
-    <button type="submit" class="btn btn-default">I'm ready to learn</button>
-    
+      </div>
+    </div>
+    <div class="container">
+    <button type="submit" class="btn btn-default">I'm ready to have fun</button>
+    </div>
   </form>
 </div>
