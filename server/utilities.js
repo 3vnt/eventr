@@ -3,6 +3,13 @@
  */
 var _ = require('underscore');
 
+// mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   database: 'eventr',
+
+// })
+
 /////////////////////////////////////////////
 //Socket helper functions
 /////////////////////////////////////////////
@@ -11,15 +18,17 @@ exports.findEmail = function(socketid, loggedIn) {
     if(loggedIn[key] === socketid) {
       return key;
     }
-  }
+  };
 };
 
 exports.findUser = function(db, email) {
-  db.query('SELECT id FROM users WHERE email = ?', email)
-  .then(function(id){
-    console.log(id);
-    return id;
-  });
+  return db.query('SELECT id FROM users WHERE email = ?', email);
+  // .then(function(id){
+  //   console.log(id);
+  //   return id;
+  // }).catch(function(err){
+  //   console.log('user not found');
+  // });
 };
 
 //Broadcast to all users that are logged in to that event;
@@ -55,3 +64,13 @@ exports.mysqlDate = function() {
 exports.mysqlDatetime = function() {
   return (new Date()).toISOString().substring(0, 19).replace('T', ' ');
 };
+
+//MYSQL Functions
+
+exports.createEvents_Users = function(db, userID, eventID) {
+  var temp = {
+    user_id: userID,
+    event_id: eventID,
+  }
+  return db.query('INSERT INTO events_users SET ?', temp);
+}

@@ -149,22 +149,36 @@ io.on('connection', function(socket) {
         total_cost: data.cost,
         event_host: '',
     };
+    var friends = data.friends;
+
+    var eventid = '';
 
     var userEmail = util.findEmail(socket.id, loggedIn);
-    console.log(userEmail, "firing here");
 
     db.query('SELECT id FROM users WHERE email = ?', userEmail)
       .then(function(data) {
         event['event_host'] = data[0].id;
       })
-      .then(function(){
-          db.query('INSERT INTO events SET ?', event)
-            .then(function(data) {
-              console.log(data);
-            })
-            .catch(function(err) {
-              console.log("what is the error:", err);
-            });
+      .then(function(){ //inserts object
+        return db.query('INSERT INTO events SET ?', event);
+      })
+      .then(function(data) { //sets eventID in an accessible scope
+        eventid = data.insertId;
+        //Add All the connections for all the users
+        //Host connection
+        util.createEvents_Users(db, event.event_host, eventid);
+        //Everyone in the friends list
+        _.each(friends, function(email) {
+          util.findUser(db, email)
+          .then(function(friendID){
+            util.createEvents_Users(db, friendID[0].id, eventid);
+          });
+        });
+
+
+      })
+      .then(function(data) {
+        console.log('heyyyy it works', data);
       });
   });
 
@@ -180,3 +194,4 @@ server.listen(port);
 
 ///Exportation
 module.exports = app;
+module.exports = db;

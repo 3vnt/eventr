@@ -59,7 +59,7 @@ angular.module('app.auth', ['app.factories'])
   $scope.signup = function() {
     if($scope.signup.password === $scope.signup.passwordConfirm) {
       var signupData = {
-        username: $scope.signup.name,
+        username: $scope.signup.username,
         email: $scope.signup.email,
         password: $scope.signup.password,
       };
