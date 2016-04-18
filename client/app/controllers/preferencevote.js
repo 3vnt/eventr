@@ -9,4 +9,12 @@ angular.module('app.preferenceVote', ['app.factories'])
   
   $scope.selectedEvent;
   $scope.selectedDate;
+
+  $scope.sendData = function() {
+
+  };
+
+  $scope.fetchData = function() {
+
+  };
 });

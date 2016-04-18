@@ -1,4 +1,11 @@
 <div ng-controller="PollResultsController">
+  <h2>{{ eventName }}</h2>
+  <p>Poll Deadline: {{ eventDeadline }}</p>
+  <p>Participants: </p>
+  <ul>
+    <li ng-repeat="participant in eventParticipants"> {{ participant.username }} </li>
+  </ul>
+
   <hr>
   <h3> Dates </h3>
   <ul ng-model="dateChoices">
