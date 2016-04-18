@@ -3,7 +3,7 @@ angular.module('app.createEvent', ['app.factories'])
 .controller('CreateEventController', function($scope, socket, $location) {
 
   $scope.eventData = {
-    deadline: '2016-05-01',
+    deadline: '2016-05-01', //yyyy-mm-dd
     friends: {},
     activities: {},
     locations: {},

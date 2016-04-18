@@ -12,7 +12,6 @@ angular.module('app.login', ['app.factories'])
   };
 
   socket.on('authenticated', function(token) {
-    console.log('success');
     $location.path('/start');
   });
 

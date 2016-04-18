@@ -4,13 +4,16 @@ angular.module('app.auth', ['app.factories'])
 .controller('AuthController', function($scope, socket, $window, $location, AuthFactory) {
   $scope.login = {};
   $scope.signup = {};
+  $scope.username = 'Not Logged In';
   $scope.loginMessage = 'Please login.';
   $scope.signupMessage = 'Please signup.';
 
   // BEGIN all authentication-related event listeners ------------------------------------
-  socket.on('loginSuccess', function(token) {
+  socket.on('loginSuccess', function(package) {
+    console.log($scope.username);
     $scope.loginMessage = 'Please login.'; //reset default auth message upon successful login.
-    $window.localStorage.setItem('com.eventr', token); 
+    $scope.username = package.username;
+    $window.localStorage.setItem('com.eventr', package.token);
     $location.path('/start');
   });
 
@@ -54,11 +57,16 @@ angular.module('app.auth', ['app.factories'])
   };
 
   $scope.signup = function() {
-    var signupData = {
-      username: $scope.signup.name,
-      email: $scope.signup.email,
-    };
-    socket.emit('signup', signupData);
+    if($scope.signup.password === $scope.signup.passwordConfirm) {
+      var signupData = {
+        username: $scope.signup.username,
+        email: $scope.signup.email,
+        password: $scope.signup.password,
+      };
+      socket.emit('signup', signupData);
+    } else {
+      $scope.signupMessage = "Passwords did not match";
+    }
   };
 
   $scope.logout = function() {

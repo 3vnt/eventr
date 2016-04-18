@@ -51,7 +51,7 @@ io.on('connection', function(socket) {
       username: signupData.username,
       email: signupData.email,
       password: signupData.password,
-      created_at: util.mysqlDatetime(),   //need to be reformatted -> currently hardcoded
+      created_at: util.mysqlDatetime(),
     };
     db.query("INSERT INTO users SET ?" , newUser)
       .then(function(data) {
@@ -74,20 +74,24 @@ io.on('connection', function(socket) {
   //Login Listener
   socket.on('login', function(loginData) {
     //save into socket loggedIn user array
-    db.query('SELECT password FROM users WHERE email = ?', loginData.email)
+    db.query('SELECT * FROM users WHERE email = ?', loginData.email)
       .then(function(data){
         if (data[0].password === loginData.password) {
           // Let's encode with the email for now. Encode with the entire user object if have time.
           var token = jwt.encode(loginData.email, 'secret');
-
           loggedIn[loginData.email] = socket.id;
-          socket.emit('loginSuccess', token);
+
+          var loginPackage = {
+            token: token,
+            username: data[0].username
+          };
+
+          socket.emit('loginSuccess', loginPackage);
         } else {
           socket.emit('loginWrongPassword');
         }
       })
       .catch(function(error) {
-        console.error(error);
         socket.emit('loginUserDoesNotExist');
       });
   });
@@ -117,7 +121,7 @@ io.on('connection', function(socket) {
           if (data[0].email === userEmail) {
             //token confirmed so send back response to client
             socket.emit('tokenConfirmed');
-          } 
+          }
         })
         .catch(function(error) {
           console.error(error);
@@ -126,28 +130,55 @@ io.on('connection', function(socket) {
     }
   });
 
+  socket.on('retrieveNotifications', function() {
+    var email = util.findEmail(socket.id, loggedIn);
+    var id = util.fineUser(db, email);
+    db.query('SELECt * FROM events where id = ')
+
+
+  })
+
   ////createEvent View
   socket.on('addEvent', function(data) {
     //Store data into database;
-
-    var userEmail = util.findEmail(socket.id, loggedIn);
-
     var event = {
         created_at: util.mysqlDatetime(),
         updated_at: util.mysqlDatetime(),
         event_name: data.name,
-        response_deadline: data.response_deadline,
+        response_deadline: data.deadline,
         total_cost: data.cost,
-        event_host: util.findUser(db, userEmail),
+        event_host: '',
     };
+    var friends = data.friends;
 
-    db.query('INSERT INTO events SET ?', event, function(err, data) {
-      if (err) {
-        console.log('failing at server INSERT Call', err);
-        return;
-      };
+    var eventid = '';
 
-    });
+    var userEmail = util.findEmail(socket.id, loggedIn);
+
+    db.query('SELECT id FROM users WHERE email = ?', userEmail)
+      .then(function(data) {
+        event['event_host'] = data[0].id;
+      })
+      .then(function(){ //inserts object
+        return db.query('INSERT INTO events SET ?', event);
+      })
+      .then(function(data) { //sets eventID in an accessible scope
+        eventid = data.insertId;
+        //Add All the connections for all the users
+        //Host connection
+        util.createEvents_Users(db, event.event_host, eventid);
+        //Everyone in the friends list
+        _.each(friends, function(email) {
+          util.findUser(db, email)
+          .then(function(friendID){
+            util.createEvents_Users(db, friendID[0].id, eventid);
+          });
+        });
+      })
+      .then(function() {
+        util.createQuestion(db, util, 'Activities', eventid, event.event_host, data.activities, friends);
+        util.createQuestion(db, util, 'Locations', eventid, event.event_host, data.locations, friends);
+      });
   });
 
   //util.eventBroadcast(io, db, event, loggedIn, data);
@@ -162,3 +193,4 @@ server.listen(port);
 
 ///Exportation
 module.exports = app;
+module.exports = db;
