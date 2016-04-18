@@ -28,9 +28,8 @@ mysql.createConnection({
   user: 'root',
   database: 'eventr',
   password: 'a'
-}).then(function (database) {
+}).then(function(database) {
   db = database;
-  console.log('successful connection');
 });
 
 //////////////////////////////////////////////
