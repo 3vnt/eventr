@@ -141,25 +141,31 @@ io.on('connection', function(socket) {
   ////createEvent View
   socket.on('addEvent', function(data) {
     //Store data into database;
-
-    var userEmail = util.findEmail(socket.id, loggedIn);
-
     var event = {
         created_at: util.mysqlDatetime(),
         updated_at: util.mysqlDatetime(),
         event_name: data.name,
         response_deadline: data.deadline,
         total_cost: data.cost,
-        event_host: util.findUser(db, userEmail),
+        event_host: '',
     };
 
-    db.query('INSERT INTO events SET ?', event, function(err, data) {
-      if (err) {
-        console.log('failing at server INSERT Call', err);
-        return;
-      };
+    var userEmail = util.findEmail(socket.id, loggedIn);
+    console.log(userEmail, "firing here");
 
-    });
+    db.query('SELECT id FROM users WHERE email = ?', userEmail)
+      .then(function(data) {
+        event['event_host'] = data[0].id;
+      })
+      .then(function(){
+          db.query('INSERT INTO events SET ?', event)
+            .then(function(data) {
+              console.log(data);
+            })
+            .catch(function(err) {
+              console.log("what is the error:", err);
+            });
+      });
   });
 
   //util.eventBroadcast(io, db, event, loggedIn, data);

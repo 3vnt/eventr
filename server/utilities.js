@@ -6,13 +6,12 @@ var _ = require('underscore');
 /////////////////////////////////////////////
 //Socket helper functions
 /////////////////////////////////////////////
-exports.findEmail = function(socketId, loggedIn) {
-  _.each(loggedIn, function(email) {
-    if(loggedIn[email] === socketId) {
-      console.log(email);
-      return email;
-    };
-  });
+exports.findEmail = function(socketid, loggedIn) {
+  for (var key in loggedIn) {
+    if(loggedIn[key] === socketid) {
+      return key;
+    }
+  }
 };
 
 exports.findUser = function(db, email) {
