@@ -76,6 +76,7 @@ exports.createEvents_Users = function(db, userID, eventID) {
 };
 
 exports.createQuestion = function(db, util, text, eventID, hostID, choicesObject, friends) {
+  var length = Object.keys(friends).length + 1;
   var question = {
     created_at: util.mysqlDatetime(),
     text: text,
@@ -90,11 +91,17 @@ exports.createQuestion = function(db, util, text, eventID, hostID, choicesObject
         var choice = {
           question_id: questionID,
           text: item,
-          isWinningChoice: 0,
+          maxVotes: length,
         };
         db.query('INSERT INTO choices SET ?', choice)
           .then(function(data){
             var choiceID = data.insertId;
+            var host = {
+              user_id: hostID,
+              choices_id: choiceID,
+              vote_time: util.mysqlDatetime(),
+            };
+            db.query('INSERT INTO users_choices SET ?', host);
             _.each(friends, function(email) {
               util.findUser(db, email)
               .then(function(friendID) {
