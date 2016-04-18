@@ -1,8 +1,9 @@
 <div ng-controller="PollResultsController">
   <hr>
   <h3> Dates </h3>
-  <ul ng-model="dateChoices">
+  <ul class="list-group" ng-model="dateChoices">
     <li 
+      class="list-group-item"
       ng-repeat="dateObject in dateChoices | orderBy:'-numVotes'"
       ng-click="hostSelectFinalChoice('date', dateObject)" 
       ng-class="{'selectedEventAndDate': toggleClass('date', dateObject) }">
@@ -12,8 +13,9 @@
   </ul>
   <hr>
   <h3> Events </h3>
-  <ul ng-model="eventChoices">
+  <ul class="list-group" ng-model="eventChoices">
     <li 
+      class="list-group-item"
       ng-repeat="eventObject in eventChoices | orderBy:'-numVotes'" 
       ng-click="hostSelectFinalChoice('event', eventObject)"
       ng-class="{'selectedEventAndDate': toggleClass('event', eventObject) }">
@@ -23,6 +25,6 @@
   </ul>
   <hr>
   <h5 ng-show="showWarning">Please select a final choice for both a date and an event!</h5>
-  <button ng-click="sendConfirmation(selectedEventAndDate)">Confirm Event Date and Time</button>
+  <button class="btn btn-default" ng-click="sendConfirmation(selectedEventAndDate)">Confirm Event Date and Time</button>
 </div>
 

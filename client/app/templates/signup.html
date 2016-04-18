@@ -1,11 +1,11 @@
 <div ng-controller="AuthController">
-<form>
+<form class="form-group">
   <h3> {{ signupMessage }}</h3>
-  Name: <input type="text" ng-model = "signup.username" required /> <br />
-  Email: <input type="email" ng-model = "signup.email" required /> <br />
-  Password: <input type="password" ng-model = "signup.password" required /> <br />
-  Confirm Password: <input type="password" ng-model = "signup.passwordConfirm" required /> <br >
-  <input type="submit" ng-click="signup()" value="Signup">
+  Name: <input class="form-control" type="text" ng-model = "signup.username" required /> <br />
+  Email: <input class="form-control" type="email" ng-model = "signup.email" required /> <br />
+  Password: <input class="form-control" type="password" ng-model = "signup.password" required /> <br />
+  Confirm Password: <input class="form-control" type="password" ng-model = "signup.passwordConfirm" required /> <br >
+  <input class="form-control" type="submit" ng-click="signup()" value="Signup">
   <a href="#/login">Login</a>
 </form> <br />
 </div>

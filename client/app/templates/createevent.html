@@ -1,34 +1,34 @@
-<div ng-controller='CreateEventController'>
-  Event Name: <input type="text" placeholder="event name" ng-model="eventData.name"></input> <br />
-  Deadline: <input type="text" placeholder="YYYY/MM/DD" ng-model="eventData.deadline"></input> <br />
-  Estimated Total Cost: <input type="text" placeholder="in $ amount" ng-model="eventData.cost"></input> <br />
+<div ng-controller='CreateEventController' class="form-group">
+  Event Name: <input type="text" placeholder="event name" class="form-control" ng-model="eventData.name"></input> <br />
+  Deadline: <input type="text" placeholder="YYYY/MM/DD" class="form-control" ng-model="eventData.deadline"></input> <br />
+  Estimated Total Cost: <input type="text" placeholder="in $ amount" class="form-control" ng-model="eventData.cost"></input> <br />
 
-  <form ng-submit="addFriend()">
+  <form ng-submit="addFriend()" class="form-group">
   Friends Invited: <input type="email" ng-model ="friendText" placeholder="friend@email.com" />
-  <input type="submit" value="submit" />
+  <input type="submit" value="submit" class="form-control"/>
   </form>
-  <ul ng-repeat="friend in eventData.friends">
-    <li ng-click="removeFriend(friend)">{{friend}}</li>
+  <ul ng-repeat="friend in eventData.friends" class="list-group">
+    <li ng-click="removeFriend(friend)" class="list-group-item">{{friend}}</li>
   </ul>
 
   <!-- Activity -->
-  <form ng-submit="addActivity()">
+  <form ng-submit="addActivity()" class="form-group">
   Activities Proposed: <input type="text" ng-model ="activityText" placeholder="activity..." />
-  <input type="submit" value="submit" />
+  <input type="submit" value="submit" class="form-control"/>
   </form>
-  <ul ng-repeat="activity in eventData.activities">
-    <li ng-click="removeActivity(activity)">{{activity}}</li>
+  <ul ng-repeat="activity in eventData.activities" class="list-group">
+    <li ng-click="removeActivity(activity)" class="list-group-item">{{activity}}</li>
   </ul>
 
   <!-- Time -->
-   <form ng-submit="addLocation()">
+   <form ng-submit="addLocation()" class="form-group">
   Locations Proposed: <input type="text" ng-model ="locationText" placeholder="location...." />
-  <input type="submit" value="submit" />
+  <input type="submit" value="submit" class="form-control"/>
   </form>
-  <ul ng-repeat="location in eventData.locations">
-    <li ng-click="removeLocation(location)">{{location}}</li>
+  <ul ng-repeat="location in eventData.locations" class="list-group">
+    <li ng-click="removeLocation(location)" class="list-group-item">{{location}}</li>
   </ul>
 
-  <button ng-click="addEvent()">Create Event</button>
+  <button ng-click="addEvent()" class="btn btn-default">Create Event</button>
 
 </div>
