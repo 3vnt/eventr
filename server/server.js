@@ -27,7 +27,6 @@ mysql.createConnection({
   host: 'localhost',
   user: 'root',
   database: 'eventr',
-  password: 'a'
 }).then(function (database) {
   db = database;
   console.log('successful connection');
@@ -195,29 +194,28 @@ io.on('connection', function (socket) {
       });
     });
 
-  socket.on('pollResultsData', function (eventID) {
-    var package = {
-      event: {},
-      activites: [],
-      locations: [],
-    };
-    db.query('SELECT * FROM events WHERE id = ?', eventID)
-      .then(function (data) {
-        package['event'] = data[0];
-        return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = `Activities`)', eventID);
-      }).then(function (choiceID) {
-        return db.query('SELECT * FROM choices WHERE question_id = ?', choiceID);
-      }).then(function (activitiesData) {
-        package.activites = activitiesData;
-        return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = `Locations`)', eventID);
-      }).then(function (choiceID) {
-        return db.query('SELECT * FROM choices WHERE question_id = ?', choiceID);
-      }).then(function (locationsData) {
-        package.locations = locationsData;
-        socket.emit('pollResultsPackage', package);
-      });
-  });
-
+    socket.on('pollResultsData', function(eventID){
+      var package = {
+        event: {},
+        activities: [],
+        locations: [],
+      };
+      db.query('SELECT * FROM events WHERE id = ?', eventID)
+        .then(function(data){
+          package['event'] = data[0];
+          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = "Activities")', eventID);
+        }).then(function(choiceID){
+          return db.query('SELECT * FROM choices WHERE question_id = ?', choiceID[0].id);
+        }).then(function(activitiesData){
+          package.activities = activitiesData;
+          return db.query('SELECT id FROM questions WHERE (event_id = ?) AND (text = "Locations")', eventID);
+        }).then(function(choiceID){
+          return db.query('SELECT * FROM choices WHERE question_id = ?', choiceID[0].id);
+        }).then(function(locationsData){
+          package.locations = locationsData;
+          socket.emit('pollResultsPackage', package);
+        });
+    });
 });
 
 
