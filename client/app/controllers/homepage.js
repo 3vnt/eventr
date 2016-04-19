@@ -1,6 +1,6 @@
 angular.module('app.homepage', ['app.factories'])
 
-.controller('NotificationController', function($scope, socket, $location) {
+.controller('NotificationController', function($window, $scope, socket, $location) {
 
   $scope.pickEventAndTime = function(responses, users) {
     var timeToPick = false;
@@ -17,14 +17,20 @@ angular.module('app.homepage', ['app.factories'])
     }
   };
 
+  $scope.clickEvent = function(event) {
+    //store event id into window
+    //broadcast for redirect to new page
+    //
+  };
 
+  //Retrieves event on load
   $scope.getEvents = function(user) {
     console.log('hello');
     socket.emit('testing');
   };
   $scope.getEvents();
 
-
+  //this gets updated everytime a new event is loaded
   socket.on('eventUpdate', function(data){
     console.log('updated:', data);
   });
