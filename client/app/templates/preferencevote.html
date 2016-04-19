@@ -8,8 +8,9 @@
         <input class="radio"
           type='radio'
           name='allEvents'
-          ng-value='event' 
-          ng-model='selectedEvent'> {{ event }}
+          ng-click='selectEvent(event)'
+          ng-value='event'
+          ng-model='selectedEvent'> {{ event.text }}
       </label>
     </div>
   </div>
@@ -19,14 +20,15 @@
       <label>
         <input class="radio"
           type='radio'
-          name='allDates' 
+          name='allDates'
+          ng-click='selectDate(date)'
           ng-value='date'
-          ng-model='responses.selectedDate'> {{ date }}
+          ng-model='responses.selectedDate'> {{ date.text }}
       </label>
       </div>
     </div>
     <div class="container">
-    <button type="submit" class="btn btn-default">I'm ready to have fun</button>
+    <button type="submit" ng-click="submitVote()" class="btn btn-default">I'm ready to have fun</button>
     </div>
   </form>
 </div>

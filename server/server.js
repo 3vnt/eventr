@@ -1,4 +1,4 @@
-//////////////////////////////////////////////
+
 //Server Dependencies
 //////////////////////////////////////////////
 var express = require('express');
@@ -13,7 +13,7 @@ var util = require('./utilities');
 var jwt = require('jwt-simple');
 
 //Modifiable Settings
-var port = 8080;
+var port = 8000;
 
 //Temp Authentication ///////////////////////
 var loggedIn = {};
@@ -219,7 +219,24 @@ io.on('connection', function (socket) {
           socket.emit('pollResultsPackage', package);
         });
     });
+
+    socket.on('votes', function(votes){
+      //Find Question ID FIrst
+      db.query('SELECT id from questions WHERE (text = Activities) AND (event_id = ?)', votes.id)
+        .then(function(questionID){
+          return db.query('UPDATE choices SET votesFor = votesFor + 1 WHERE (text =' + votes.event +') AND (id = ?)', questionID);
+        })
+        .then(function(){
+          return db.query('SELECT id FROM questions WHERE (text = Locations) AND (event_id = ?)', voted.id);
+        })
+        .then(function(questionID) {
+          return db.query('UPDATE choices SET votesFor = votesFor + 1 WHERE (text =' + votes.date +') AND (id=?)', questionID);
+        });
+    });
+
 });
+
+
 
 
 //util.eventBroadcast(io, db, event, loggedIn, data);

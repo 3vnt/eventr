@@ -1,7 +1,7 @@
 angular.module('app.pollResults', ['app.factories'])
 
 .controller('PollResultsController', function($scope, $location, socket, $window) {
-  // TODO: check if user is Host, 
+  // TODO: check if user is Host,
   //      if is: enable choosy things.
   //      if not: just show results so far.
 
@@ -29,28 +29,31 @@ angular.module('app.pollResults', ['app.factories'])
   // ];
 
   socket.on('pollResultsPackage', function(package) {
-    // console.log('Package: ', package);
+    console.log('Package: ', package);
     $scope.eventParticipants = package.participants;
     var locations = package.locations;
-    var activities = package.activities; 
+    var activities = package.activities;
     var event = package.event;
     var participants = package.participants;
 
-    for (var i = 0; i < locations.length; i++) {
-      var dateToAdd = {
-        date: locations[i].text,
-        numVotes: locations[i].votesFor
-      };
-      $scope.dateChoices.push(dateToAdd);
-    }
+    // for (var i = 0; i < locations.length; i++) {
+    //   var dateToAdd = {
+    //     date: locations[i].text,
+    //     numVotes: locations[i].votesFor
+    //   };
+    //   $scope.dateChoices.push(dateToAdd);
+    // }
 
-    for (var i = 0; i < activities.length; i++) {
-      var eventToAdd = {
-        event: activities[i].text,
-        numVotes: activities[i].votesFor
-      };
-      $scope.eventChoices.push(eventToAdd);
-    }
+    $scope.dateChoices = locations;
+    $scope.eventChoices = activities;
+
+    // for (var i = 0; i < activities.length; i++) {
+    //   var eventToAdd = {
+    //     event: activities[i].text,
+    //     numVotes: activities[i].votesFor
+    //   };
+    //   $scope.eventChoices.push(eventToAdd);
+    // }
 
     $scope.eventName = package.event.event_name;
     $scope.eventDeadline = package.event.response_deadline.slice(0, 10);
@@ -65,8 +68,8 @@ angular.module('app.pollResults', ['app.factories'])
   $scope.toggleClass = function(choiceType, choiceObject) {
     return $scope.selectedEventAndDate[choiceType] === choiceObject[choiceType];
   };
-  
-  $scope.sendConfirmation = function (finalChoices) { 
+
+  $scope.sendConfirmation = function (finalChoices) {
     // NOTE: check if values are not defined
     // TODO: Ensure values are date, time.
     if (finalChoices.event && finalChoices.date) {
@@ -78,12 +81,12 @@ angular.module('app.pollResults', ['app.factories'])
       $scope.showWarning = true;
     }
   };
-  
+
   $scope.getEventID = function() {
     var eventID = $window.localStorage.getItem('com.eventID');
 
     socket.emit('pollResultsData', eventID);
   };
-  $scope.getEventID(); //get immediately 
+  $scope.getEventID(); //get immediately
 
 });
