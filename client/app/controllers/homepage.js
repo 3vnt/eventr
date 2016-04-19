@@ -1,6 +1,7 @@
 angular.module('app.homepage', ['app.factories'])
 
-.controller('NotificationController', function($window, $scope, socket, $location) {
+.controller('NotificationController', function($window, $scope, $location, socket, AuthFactory) {
+  $scope.loggedIn = AuthFactory.isAuth;
 
   $scope.pickEventAndTime = function(responses, users) {
     var timeToPick = false;

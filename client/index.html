@@ -1,68 +1,78 @@
 <!DOCTYPE html>
 <html ng-app='app'>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <title>EVENTR</title>
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="lib/angular-bootstrap/ui-bootstrap-csp.css">
     <link rel="stylesheet" href="bootstrap-theme.css">
-  </head>
+</head>
 
-  <body>
-    <div class="container">
-    <h1>EVENTR</h1>
-    <!-- User Profile: -->
+<body>
+    <div class="container-fluid" >
+        <div class="row" style="background-color: rgb(135,206,250);">
+            <div class="container">
+                <h1 style="color:#fff;font-weight: 800;" class="">EVENTR</h1>
+                <br>
+            </div>
+        </div>
+        <!-- User Profile: -->
+        <div class="row" style="background-color: white;">
+            <div class="container">
+                <ul class="nav navbar-right nav-pills" ng-controller="AuthController">
+                    <li class="" ng-show="loggedIn()"><a href="#/createevent">Create Event</a></li>
+                    <li class="disabled" ng-show="loggedIn()"><a>User: {{$scope.username}}</a></li>
+                    <li ng-click="logout()" class="" ng-show="loggedIn()"><a href=""> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row" ng-controller="NotificationController" style="background-color: rgb(81,171,227);" ng-show="loggedIn()">
+            <div class="container">
+                <h3 style="color: #fff;">Notifications</h3>
+                <ul class='list-group'>
+                    <li class="list-group-item" ng-show="timeToPick">Let your guests know what the final decision is.</li>
+                    <li class="list-group-item" ng-hide="voted">You've been invited to an event. Make your selection now.</li>
+                </ul>
+            </div>
+        </div>
+        <!-- Event Navigation: -->
+        <nav class="nav navbar-nav">
+            <ul class="list-group">
 
-    <div class="row">
-      <ul class="nav navbar-right nav-pills" ng-controller="AuthController">
-        <li class=""><a href="#/createevent">Create Event</a></li>
-        <li class="disabled"><a>User: {{$scope.username}}</a></li>
-        <li ng-click="logout()" class="" ng-show="loggedIn()"><a href=""> Logout</a></li>
-      </ul>
+                <li class="list-group-item" ng-repeat="event in user.events"></li>
+            </ul>
+        </nav>
+        <br />
+        <br />
     </div>
-    <!-- Notification Bar: -->
+        <!-- Views: -->
+        <div ng-view ng-controller="NotificationController"></div>
 
-    <div class="row" ng-controller="NotificationController">Notifications</div>
-    <ul class='list-group'>
-        <li class="list-group-item" ng-show="timeToPick">Let your guests know what the final decision is.</li>
-        <li class="list-group-item" ng-hide="voted">You've been invited to an event. Make your selection now.</li>
-    </ul>
-    <!-- Event Navigation: -->
-    <nav class="nav navbar-nav">
-      <ul class="list-group">
+        <!-- Client side dependencies here: -->
+        <script src="lib/angular/angular.js"></script>
+        <script src="lib/angular-route/angular-route.js"></script>
+        <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="lib/angular-bootstrap/ui-bootstrap.js"></script>
+        <!-- maybe not optional: find bower install for ngAnimate -->
+        <!-- optional: find bower install for ngTouch -->
 
-        <li class="list-group-item" ng-repeat="event in user.events"></li>
-      </ul>
-    </nav>
-    <br />
-    <br />
-  </div>
-    <!-- Views: -->
-    <div ng-view ng-controller="NotificationController"></div>
+        <script src="app/app.js"></script>
+        <script src="app/controllers/homepage.js"></script>
+        <script src="app/controllers/auth.js"></script>
+        <script src="app/factories/factories.js"></script>
+        <script src="app/controllers/start.js"></script>
+        <script src="app/controllers/createevent.js"></script>
+        <script src="app/controllers/pollresults.js"></script>
+        <script src="app/controllers/preferencevote.js"></script>
+        <script src="app/controllers/finalaccept.js"></script>
+        <script src="app/controllers/confirmedlobby.js"></script>
+        <script src="app/controllers/homepage.js"></script>
 
-    <!-- Client side dependencies here: -->
-    <script src="lib/angular/angular.js"></script>
-    <script src="lib/angular-route/angular-route.js"></script>
-    <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script src="lib/angular-bootstrap/ui-bootstrap.js"></script>
-    <!-- maybe not optional: find bower install for ngAnimate -->
-    <!-- optional: find bower install for ngTouch -->
+        <!-- Server side Dependencies: -->
+        <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+        <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
 
-    <script src="app/app.js"></script>
-    <script src="app/controllers/homepage.js"></script>
-    <script src="app/controllers/auth.js"></script>
-    <script src="app/factories/factories.js"></script>
-    <script src="app/controllers/start.js"></script>
-    <script src="app/controllers/createevent.js"></script>
-    <script src="app/controllers/pollresults.js"></script>
-    <script src="app/controllers/preferencevote.js"></script>
-    <script src="app/controllers/finalaccept.js"></script>
-    <script src="app/controllers/confirmedlobby.js"></script>
-    <script src="app/controllers/homepage.js"></script>
+</body>
 
-    <!-- Server side Dependencies: -->
-    <script src="http://localhost:8080/socket.io/socket.io.js"></script>
-    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> -->
-
-  </body>
 </html>
