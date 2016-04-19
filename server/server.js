@@ -134,11 +134,22 @@ io.on('connection', function (socket) {
   });
 
 
-  // socket.on('retrieveNotifications', function() {
-  //   var email = util.findEmail(socket.id, loggedIn);
-  //   var id = util.fineUser(db, email);
-  //   db.query('SELECT * FROM events where id = ');
-  // });
+  socket.on('retrieveNotifications', function() {
+    var email = util.findEmail(socket.id, loggedIn);
+    console.log('something', email);
+    db.query('SELECT id FROM users WHERE email = ?', email)
+      .then(function(id){
+        console.log(id[0].id);
+        return db.query('SELECT * FROM events LEFT JOIN events_users on events.id = events_users.event_id WHERE user_id ='+ id[0].id);
+      })
+      .then(function(eventData){
+        console.log(eventData);
+        socket.emit('eventUpdate', eventData);
+      })
+      .catch(function(err){
+        console.log("THE DOOM ERROR", err);
+      });
+  });
 
   ////createEvent View
   socket.on('addEvent', function (data) {
