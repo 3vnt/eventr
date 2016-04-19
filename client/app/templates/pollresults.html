@@ -10,13 +10,13 @@
   <hr>
   <h3> Dates </h3>
   <ul class="list-group" ng-model="dateChoices">
-    <li 
+    <li
       class="list-group-item"
       ng-repeat="dateObject in dateChoices | orderBy:'-numVotes'"
-      ng-click="hostSelectFinalChoice('date', dateObject)" 
+      ng-click="hostSelectFinalChoice('date', dateObject)"
       ng-class="{'selectedEventAndDate': toggleClass('date', dateObject) }">
-      <span>Date: {{ dateObject.date }}</span>
-      <span>Votes: {{ dateObject.numVotes }}</span>
+      <span>{{ dateObject.text }}</span>
+      <span>   Votes: {{ dateObject.votesFor }}</span>
     </li>
   </ul>
   </div>
@@ -24,13 +24,13 @@
   <div class="container">
   <h3> Events </h3>
   <ul class="list-group" ng-model="eventChoices">
-    <li 
+    <li
       class="list-group-item"
-      ng-repeat="eventObject in eventChoices | orderBy:'-numVotes'" 
+      ng-repeat="eventObject in eventChoices | orderBy:'-numVotes'"
       ng-click="hostSelectFinalChoice('event', eventObject)"
       ng-class="{'selectedEventAndDate': toggleClass('event', eventObject) }">
-      <span>Event: {{ eventObject.event }}</span>
-      <span>Votes: {{ eventObject.numVotes }}</span>
+      <span>{{ eventObject.text }}</span>
+      <span>   votes: {{ eventObject.votesFor }}</span>
     </li>
   </ul>
   </div>
