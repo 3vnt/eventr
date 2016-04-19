@@ -3,6 +3,8 @@ angular.module('app.homepage', ['app.factories'])
 .controller('NotificationController', function($window, $scope, $location, socket, AuthFactory) {
   $scope.loggedIn = AuthFactory.isAuth;
 
+  $scope.events = [{event_name: "some event", response_deadline: "some time"}];
+
   $scope.pickEventAndTime = function(responses, users) {
     var timeToPick = false;
 
@@ -18,22 +20,23 @@ angular.module('app.homepage', ['app.factories'])
     }
   };
 
-  $scope.clickEvent = function(event) {
-    //store event id into window
-    //broadcast for redirect to new page
-    //
+  $scope.clickEvent = function(eventID, userID) {
+    $window.localStorage.setItem('eventID', eventID);
+    $location.path('/preferencevote');
   };
 
   //Retrieves event on load
   $scope.getEvents = function(user) {
-    console.log('hello');
-    socket.emit('testing');
+    console.log('firing from client');
+    socket.emit('retrieveNotifications');
   };
+
   $scope.getEvents();
 
   //this gets updated everytime a new event is loaded
   socket.on('eventUpdate', function(data){
-    console.log('updated:', data);
+    console.log('received stuff');
+    $scope.events =  data;
   });
 
 });
