@@ -3,20 +3,18 @@
   
 ##Technology Stack
 
-  Database - MySQL
-  Server - Node/Express
-  Overlay on Server - Socket (for simultaneous users)
   Front-End - Angular 1.5
-
+  Server - Node/Express
+  Database - MySQL
+  Overlay on Server - Socket (for simultaneous users)
+    -Socket.io enables real-time bidirectional event-based communication. It is useful for things like chat clients and simultaneous collaboration.
 
 ##Features Completed
   - Create an Event
   - Event Polling
-  - Poll Results Rendering
   - Voting Functionality
   - Notification Broadcasts
   - Authentication with Tokens
-  
 
 ##Features Pending
   - Chat Client
@@ -27,7 +25,7 @@
   - Encryption & Salt for Passwords
 
 ##Install & Getting Started
-  1. Fork the Repo
+  1. Fork the repo
   2. bower install
   3. npm install
   4. mysql.server start
@@ -39,7 +37,7 @@
   ![](https://trello-attachments.s3.amazonaws.com/5706910238f37c2e5163dbaa/1139x828/0ebbaa4ad46092d3948c668ce2c8c1ca/upload_4_7_2016_at_3_28_00_PM.png)
 
 ##Bugs
-  - minor mysql error where SELECT queries only pull one row of data
+  - minor MySQL error where SELECT queries only pull one row of data
   - random redirects
 
 ##Team
@@ -47,5 +45,3 @@
   - Product Manager - Genevieve Sublette
   - Team Member - Jonathen Chen
   - Team Member - Haoming Huang
-
-
