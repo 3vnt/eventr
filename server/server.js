@@ -198,8 +198,8 @@ io.on('connection', function (socket) {
             return data;
           })
           .then(function(data){
-            util.eventBroadcast(io, db, eventid, loggedIn, 'this is working');
             socket.emit('eventID', eventid);
+            util.eventBroadcast(io, db, eventid, loggedIn,'');
           });
       });
     });

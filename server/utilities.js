@@ -45,9 +45,9 @@ exports.eventBroadcast = function(io, db, eventID, loggedIn, data) {
             if(loggedIn[email]) {
               //if yes then broadcast to them something specific
               //io.sockets.emit('eventUpdate', data);
-              io.sockets.connected[loggedIn[email]].emit('eventUpdate', data);
+              io.sockets.connected[loggedIn[email]].emit('eventAdded', data);
             }
-          })
+          });
     });
   });
 };

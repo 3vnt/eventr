@@ -38,13 +38,14 @@
         </div>
     <!-- Notification Bar: -->
     <div ng-controller="NotificationController" class="list-group">
+    <li class="list-group-item" ng-show="timeToPick">Let your guests know what the final decision is.</li>
+    <li class="list-group-item" ng-hide="voted">You've been invited to an event. Make your selection now.</li>
         <h3 style="color: #fff;">Notifications</h3>
         <ul ng-repeat="event in events">
             <li ng-click="clickEvent(event.id, event.user_id)"> {{event.event_name}} --- {{event.response_deadline}}</li>
         </ul>
     </div>
-    <li class="list-group-item" ng-show="timeToPick">Let your guests know what the final decision is.</li>
-    <li class="list-group-item" ng-hide="voted">You've been invited to an event. Make your selection now.</li>
+    <ng-view>
 
         <!-- Client side dependencies here: -->
         <script src="lib/angular/angular.js"></script>

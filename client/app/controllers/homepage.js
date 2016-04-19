@@ -33,6 +33,10 @@ angular.module('app.homepage', ['app.factories'])
 
   $scope.getEvents();
 
+  socket.on('eventAdded', function(){
+    $scope.getEvents();
+  });
+
   //this gets updated everytime a new event is loaded
   socket.on('eventUpdate', function(data){
     console.log('received stuff');
