@@ -12,21 +12,25 @@
     <div class="container">
     <h1>EVENTR</h1>
     <!-- User Profile: -->
-    <nav>Navigation
-      <ul class="nav nav-tabs" ng-controller="AuthController">{{$scope.username}}
-        <button ng-click="logout()" class="btn btn-default pull-right">Logout</button>
+
+    <div class="row">
+      <ul class="nav navbar-right nav-pills" ng-controller="AuthController">
+        <li class=""><a href="#/createevent">Create Event</a></li>
+        <li class="disabled"><a>User: {{$scope.username}}</a></li>
+        <li ng-click="logout()" class="" ng-show="loggedIn()"><a href=""> Logout</a></li>
       </ul>
-    </nav>
-
+    </div>
     <!-- Notification Bar: -->
-    <div ng-controller="NotificationController" class="list-group">Notifications</div>
-    <li class="list-group-item" ng-show="timeToPick">Let your guests know what the final decision is.</li>
-    <li class="list-group-item" ng-hide="voted">You've been invited to an event. Make your selection now.</li>
 
+    <div class="row" ng-controller="NotificationController">Notifications</div>
+    <ul class='list-group'>
+        <li class="list-group-item" ng-show="timeToPick">Let your guests know what the final decision is.</li>
+        <li class="list-group-item" ng-hide="voted">You've been invited to an event. Make your selection now.</li>
+    </ul>
     <!-- Event Navigation: -->
     <nav class="nav navbar-nav">
       <ul class="list-group">
-        <li class="list-group-item list-group-item-info"><a href="#/events">Events</a></li>
+
         <li class="list-group-item" ng-repeat="event in user.events"></li>
       </ul>
     </nav>
@@ -62,4 +66,3 @@
 
   </body>
 </html>
-
