@@ -1,25 +1,26 @@
 # eventr
-  Eventr is a web app that makes planning events a breeze. Scheduling, voting, payments, and notifying friends are easy as entering the right information and the app will handle the rest for you. Being a participant is just as easy with the app being a one stop shop for payments, voting for events, authentication and communication about events
+  Eventr is a web app that makes planning events a breeze. Scheduling, voting, payments, and notifying friends are easy as entering the right information and the app will handle the rest for you. Being a participant is just as easy with the app being a one stop shop for payments, voting for events, and event communication.
   
 ##Technology Stack
 
-  Databse - MySQL
+  Database - MySQL
   Server - Node/Express
   Overlay on Server - Socket (for simultaneous users)
   Front-End - Angular 1.5
 
 
 ##Features Completed
-  - Create Event
-  - Event Question and Choices Rendering
-  - Voting functionality
-  - Notifiation Broadcast
-  - Auth with tokens
+  - Create an Event
+  - Event Polling
+  - Poll Results Rendering
+  - Voting Functionality
+  - Notification Broadcasts
+  - Authentication with Tokens
   
 
 ##Features Pending
   - chat client
-  - payments page and handling payments
+  - payments handling
   - email & calendar hookup
   - deployment
   - test suite
