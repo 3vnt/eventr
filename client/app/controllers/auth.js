@@ -16,6 +16,7 @@ angular.module('app.auth', ['app.factories'])
     $scope.loginMessage = 'Please login.'; //reset default auth message upon successful login.
     $scope.username = package.username;
     $window.localStorage.setItem('com.eventr', package.token);
+    socket.emit('retrieveNotifications');
     $location.path('/start');
   });
 
@@ -56,6 +57,7 @@ angular.module('app.auth', ['app.factories'])
       password: $scope.login.password
     };
     socket.emit('login', loginData);
+
   };
 
   $scope.signup = function() {

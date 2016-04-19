@@ -36,18 +36,15 @@
                 </ul>
             </div>
         </div>
-        <!-- Event Navigation: -->
-        <nav class="nav navbar-nav">
-            <ul class="list-group">
-
-                <li class="list-group-item" ng-repeat="event in user.events"></li>
-            </ul>
-        </nav>
-        <br />
-        <br />
+    <!-- Notification Bar: -->
+    <div ng-controller="NotificationController" class="list-group">
+        <h3 style="color: #fff;">Notifications</h3>
+        <ul ng-repeat="event in events">
+            <li ng-click="clickEvent(event.id, event.user_id)"> {{event.event_name}} --- {{event.response_deadline}}</li>
+        </ul>
     </div>
-        <!-- Views: -->
-        <div ng-view ng-controller="NotificationController"></div>
+    <li class="list-group-item" ng-show="timeToPick">Let your guests know what the final decision is.</li>
+    <li class="list-group-item" ng-hide="voted">You've been invited to an event. Make your selection now.</li>
 
         <!-- Client side dependencies here: -->
         <script src="lib/angular/angular.js"></script>
