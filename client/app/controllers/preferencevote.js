@@ -10,7 +10,7 @@ angular.module('app.preferenceVote', ['app.factories'])
   $scope.selectedEvent;
   $scope.selectedDate;
 
-  $scope.on('pollResultsPackage', function(package){
+  socket.on('pollResultsPackage', function(package){
     $scope.eventChoices = package.activites;
     $scope.dateChoices = package.locations;
     $scope.event = package.event;
