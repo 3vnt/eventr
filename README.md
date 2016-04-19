@@ -3,11 +3,11 @@
   
 ##Technology Stack
 
-  Front-End - Angular 1.5
-  Server - Node/Express
-  Database - MySQL
-  Overlay on Server - Socket (for simultaneous users)
-    -Socket.io enables real-time bidirectional event-based communication. It is useful for things like chat clients and simultaneous collaboration.
+  - Front-End - Angular 1.5
+  - Server - Node/Express
+  - Database - MySQL
+  - Overlay on Server - Socket (for simultaneous users)
+  Socket.io enables real-time bidirectional event-based communication. It is useful for things like chat clients and simultaneous collaboration.
 
 ##Features Completed
   - Create an Event
