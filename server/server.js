@@ -24,7 +24,7 @@ var loggedIn = {};
 var db;
 
 mysql.createConnection({
-  host: 'localhost',
+  host: node.env.DATABASE_URL,
   user: 'root',
   database: 'eventr',
 }).then(function(database) {
